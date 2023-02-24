@@ -6,6 +6,13 @@
     <string name="events">Events</string>
     <string name="tasks">Tasks</string>
     <string name="settings">Settings</string>
-    <string name="qr_scan_desc">QR Scanner</string>
+
     <string name="bottom_nav_divider_desc">Bottom navigation divider</string>
+    <string name="qr_scan_desc">QR Scanner</string>
+    <string name="logo_desc">Logo</string>
+    <string name="blob_desc">Blob</string>
+    <string name="background_desc">Background</string>
+    <string name="upcoming_news_title">Upcoming news!</string>
+    <string name="todo">TODO</string>
+
 </resources>

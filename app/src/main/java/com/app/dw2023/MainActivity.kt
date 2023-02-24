@@ -3,6 +3,8 @@ package com.app.dw2023
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.core.content.ContextCompat
+import androidx.navigation.findNavController
+import androidx.navigation.ui.setupWithNavController
 import com.app.dw2023.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -11,12 +13,16 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        mainBinding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(mainBinding.root)
+
+        supportActionBar?.hide()
 
         window.navigationBarColor = ContextCompat.getColor(this, R.color.blackNavBar)
 
-        mainBinding = ActivityMainBinding.inflate(layoutInflater)
         mainBinding.bottomNavView.background = null
 
+        val navController = findNavController(R.id.fragmentContainerView)
+        mainBinding.bottomNavView.setupWithNavController(navController)
     }
 }

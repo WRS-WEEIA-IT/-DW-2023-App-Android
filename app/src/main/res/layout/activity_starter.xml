@@ -2,14 +2,30 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/constraintLayoutSplash"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".StarterActivity">
+    android:background="#0D0D0D">
+
+    <ImageView
+        android:id="@+id/imageViewLogo"
+        android:layout_width="300dp"
+        android:layout_height="225dp"
+        android:contentDescription="@string/logo_desc"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.5"
+        app:srcCompat="@drawable/dw_logo" />
 
     <ImageView
         android:id="@+id/imageViewLowerBlob"
         android:layout_width="300dp"
         android:layout_height="300dp"
+        android:contentDescription="@string/blob_desc"
         android:scaleType="fitStart"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -19,18 +35,9 @@
         android:id="@+id/imageViewUpperBlob"
         android:layout_width="300dp"
         android:layout_height="300dp"
+        android:contentDescription="@string/blob_desc"
         android:scaleType="fitStart"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/blob_upper" />
-
-    <ImageView
-        android:id="@+id/imageView5"
-        android:layout_width="300dp"
-        android:layout_height="300dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/dw_logo_black" />
 </androidx.constraintlayout.widget.ConstraintLayout>
