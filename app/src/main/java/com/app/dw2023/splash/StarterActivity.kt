@@ -1,4 +1,4 @@
-package com.app.dw2023
+package com.app.dw2023.splash
 
 import android.content.Intent
 import android.os.Build
@@ -8,6 +8,9 @@ import android.os.Handler
 import android.os.Looper
 import android.view.WindowInsets
 import android.view.WindowManager
+import androidx.core.content.ContextCompat
+import com.app.dw2023.R
+import com.app.dw2023.activity.MainActivity
 
 class StarterActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,6 +26,8 @@ class StarterActivity : AppCompatActivity() {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN
             )
         }
+
+        window.navigationBarColor = ContextCompat.getColor(this, R.color.blackNavBar)
 
         Handler(Looper.getMainLooper()).postDelayed({
             val intent = Intent(this@StarterActivity, MainActivity::class.java)

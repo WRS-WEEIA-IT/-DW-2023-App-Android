@@ -1,10 +1,11 @@
-package com.app.dw2023
+package com.app.dw2023.fragment
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.app.dw2023.R
 
 class EventsFragment : Fragment() {
 
