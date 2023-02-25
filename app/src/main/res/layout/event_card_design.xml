@@ -21,7 +21,7 @@
         android:background="@drawable/event_card_background">
 
         <TextView
-            android:id="@+id/textView4"
+            android:id="@+id/eventCardDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
@@ -29,12 +29,12 @@
             android:fontFamily="@font/montserrat_light"
             android:text="@string/example_date_with_time"
             android:textColor="@color/white"
-            android:textSize="11sp"
+            android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/button"
+            android:id="@+id/eventCardSignUpButton"
             android:layout_width="101dp"
             android:layout_height="32dp"
             android:layout_marginStart="24dp"
@@ -50,7 +50,7 @@
             app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
-            android:id="@+id/textView5"
+            android:id="@+id/eventCardDesc"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
@@ -58,11 +58,11 @@
             android:fontFamily="@font/montserrat"
             android:text="@string/event_card_desc_temp"
             android:textColor="@color/white"
-            app:layout_constraintBottom_toTopOf="@+id/button"
+            app:layout_constraintBottom_toTopOf="@+id/eventCardSignUpButton"
             app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
-            android:id="@+id/textView6"
+            android:id="@+id/eventCardTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
@@ -71,7 +71,7 @@
             android:text="@string/event_card_title_temp"
             android:textColor="@color/white"
             android:textSize="11sp"
-            app:layout_constraintBottom_toTopOf="@+id/textView5"
+            app:layout_constraintBottom_toTopOf="@+id/eventCardDesc"
             app:layout_constraintStart_toStartOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

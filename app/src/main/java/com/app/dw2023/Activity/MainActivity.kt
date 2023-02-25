@@ -1,4 +1,4 @@
-package com.app.dw2023.activity
+package com.app.dw2023.Activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

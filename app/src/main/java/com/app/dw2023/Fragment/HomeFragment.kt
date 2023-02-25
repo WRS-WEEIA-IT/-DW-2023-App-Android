@@ -1,4 +1,4 @@
-package com.app.dw2023.fragment
+package com.app.dw2023.Fragment
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

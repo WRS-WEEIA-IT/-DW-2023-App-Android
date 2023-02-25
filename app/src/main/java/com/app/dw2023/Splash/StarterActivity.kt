@@ -1,4 +1,4 @@
-package com.app.dw2023.splash
+package com.app.dw2023.Splash
 
 import android.content.Intent
 import android.os.Build
@@ -10,7 +10,7 @@ import android.view.WindowInsets
 import android.view.WindowManager
 import androidx.core.content.ContextCompat
 import com.app.dw2023.R
-import com.app.dw2023.activity.MainActivity
+import com.app.dw2023.Activity.MainActivity
 
 class StarterActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
