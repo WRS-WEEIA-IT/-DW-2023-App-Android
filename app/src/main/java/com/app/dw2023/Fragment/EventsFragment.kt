@@ -29,6 +29,7 @@ class EventsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         val view = inflater.inflate(R.layout.fragment_events, container, false)
 
         recyclerView = view.findViewById(R.id.recyclerViewEvents)
@@ -38,7 +39,7 @@ class EventsFragment : Fragment() {
 
         eventList = arrayListOf()
 
-        eventAdapter = EventAdapter(eventList)
+        eventAdapter = EventAdapter(eventList, requireContext())
         recyclerView.adapter = eventAdapter
 
         EventChangeListener()
@@ -50,7 +51,7 @@ class EventsFragment : Fragment() {
     private fun EventChangeListener() {
 
         db = FirebaseFirestore.getInstance()
-        db.collection("Event")
+        db.collection("Event").orderBy("date")
             .addSnapshotListener(object : EventListener<QuerySnapshot> {
                 override fun onEvent(value: QuerySnapshot?, error: FirebaseFirestoreException?) {
 
