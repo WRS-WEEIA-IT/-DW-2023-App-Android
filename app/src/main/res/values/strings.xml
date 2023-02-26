@@ -12,6 +12,7 @@
     <string name="logo_desc">Logo</string>
     <string name="blob_desc">Blob</string>
     <string name="background_desc">Background</string>
+    <string name="event_card_image_desc">Event Card Background Picture</string>
     <string name="upcoming_news_title">Upcoming news!</string>
     <string name="todo">TODO</string>
 
