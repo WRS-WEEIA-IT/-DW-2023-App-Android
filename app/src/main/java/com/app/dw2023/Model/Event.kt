@@ -2,4 +2,4 @@ package com.app.dw2023.Model
 
 import com.google.firebase.Timestamp
 
-data class Event(var company: String? = null, var desc: String? = null, var date: Timestamp? = null)
+data class Event(var imageSource: String? = null, var partner: String? = null, var timeStart: Timestamp? = null, var timeEnd: Timestamp? = null, var title: String? = null)

@@ -17,6 +17,7 @@ class MainActivity : AppCompatActivity() {
         mainBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(mainBinding.root)
 
+
         supportActionBar?.hide()
 
         window.navigationBarColor = ContextCompat.getColor(this, R.color.blackNavBar)

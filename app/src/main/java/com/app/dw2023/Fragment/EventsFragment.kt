@@ -51,7 +51,7 @@ class EventsFragment : Fragment() {
     private fun EventChangeListener() {
 
         db = FirebaseFirestore.getInstance()
-        db.collection("Event").orderBy("date")
+        db.collection("lectures").orderBy("timeStart")
             .addSnapshotListener(object : EventListener<QuerySnapshot> {
                 override fun onEvent(value: QuerySnapshot?, error: FirebaseFirestoreException?) {
 

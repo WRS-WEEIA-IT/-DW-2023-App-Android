@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.widget.AppCompatButton
 import androidx.recyclerview.widget.RecyclerView
 import com.app.dw2023.Model.Event
@@ -32,12 +31,19 @@ class EventAdapter(var eventList: ArrayList<Event>, var context: Context): Recyc
 
     override fun onBindViewHolder(holder: EventViewHolder, position: Int) {
         val event = eventList[position]
-        holder.eventCardTitle.text = event.company
-        holder.eventCardDesc.text = event.desc
+        holder.eventCardTitle.text = event.partner
+        holder.eventCardDesc.text = event.title
 
-        val simpleDateFormat = SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.getDefault())
-        val date = event.date?.toDate()
-        holder.eventCardDate.text = simpleDateFormat.format(date!!)
+        val dateStart = event.timeStart?.toDate()
+        val dateEnd = event.timeEnd?.toDate()
+
+        val sdfStart = SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.getDefault())
+        sdfStart.timeZone = TimeZone.getTimeZone("GMT+1:00")
+        val sdfEnd = SimpleDateFormat("HH:mm", Locale.getDefault())
+        sdfEnd.timeZone = TimeZone.getTimeZone("GMT+1:00")
+
+        val date = "${sdfStart.format(dateStart!!)} - ${sdfEnd.format(dateEnd!!)}"
+        holder.eventCardDate.text = date
 
         holder.eventCardSignUpButton.setOnClickListener {
 //            Toast.makeText(context, "You clicked $position event", Toast.LENGTH_SHORT).show()
