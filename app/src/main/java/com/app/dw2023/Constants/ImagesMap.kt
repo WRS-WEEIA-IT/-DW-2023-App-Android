@@ -7,6 +7,7 @@ object ImagesMap {
         "business" to R.drawable.business,
         "crypto" to R.drawable.event_crypto,
         "programming" to R.drawable.event_programming,
-        "mobile" to R.drawable.event_mobile
+        "mobile" to R.drawable.event_mobile,
+        "accenture" to R.drawable.accenture_image
     )
 }

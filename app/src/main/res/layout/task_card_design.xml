@@ -21,7 +21,7 @@
         android:background="@android:color/transparent">
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/tasksCardSignUpButton"
+            android:id="@+id/tasksCardPointsButton"
             android:layout_width="100dp"
             android:layout_height="32dp"
             android:layout_marginStart="24dp"
@@ -82,14 +82,15 @@
 
         <TextView
             android:id="@+id/tasksTipsTextView"
-            android:layout_width="200dp"
+            android:layout_width="120dp"
             android:layout_height="40dp"
             android:layout_marginStart="24dp"
             android:fontFamily="@font/montserrat_light"
             android:text="@string/tips_to_complete"
+            android:textAlignment="textStart"
             android:textColor="@color/white"
             android:textSize="8sp"
-            app:layout_constraintBottom_toTopOf="@+id/tasksCardSignUpButton"
+            app:layout_constraintBottom_toTopOf="@+id/tasksCardPointsButton"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tasksTitleTextView" />
 

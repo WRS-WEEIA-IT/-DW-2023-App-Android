@@ -26,7 +26,7 @@
     <string name="current_points">Currently, you have earned 0 points!</string>
     <string name="button_points">10 Points</string>
     <string name="scan_to_complete">Scan QR code to complete task</string>
-    <string name="tips_to_complete">Tips to complete, these are tips to complete Tips to complete, these are tips to complete Tips to complete, these are tips to complete Tips to complete, these are tips to complete Tips to complete, these are tips to complete</string>
+    <string name="tips_to_complete">Tips to complete, these are tips to complete</string>
     <string name="welcome_on_weeia">Welcome on WEEIA!</string>
     <string name="example_task_title">Task 1</string>
 
