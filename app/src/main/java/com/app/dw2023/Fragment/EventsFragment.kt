@@ -23,7 +23,7 @@ class EventsFragment : Fragment() {
     lateinit var recyclerView: RecyclerView
     lateinit var eventList: ArrayList<Event>
     lateinit var eventAdapter: EventAdapter
-    lateinit var db : FirebaseFirestore
+    lateinit var db: FirebaseFirestore
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -60,19 +60,13 @@ class EventsFragment : Fragment() {
                         return
                     }
 
-                    for (dc : DocumentChange in value?.documentChanges!!) {
+                    for (dc: DocumentChange in value?.documentChanges!!) {
                         if (dc.type == DocumentChange.Type.ADDED) {
                             eventList.add(dc.document.toObject(Event::class.java))
                         }
                     }
-
                     eventAdapter.notifyDataSetChanged()
-
                 }
-
             })
-        
-
     }
-
 }
