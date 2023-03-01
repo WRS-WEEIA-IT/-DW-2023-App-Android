@@ -9,8 +9,8 @@ import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.app.dw2023.R
-import com.app.dw2023.Task
-import com.app.dw2023.TaskAdapter
+import com.app.dw2023.Model.Task
+import com.app.dw2023.Adapter.TaskAdapter
 import com.google.firebase.firestore.*
 
 class TasksFragment : Fragment() {

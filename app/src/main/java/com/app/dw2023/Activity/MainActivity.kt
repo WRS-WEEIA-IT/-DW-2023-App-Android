@@ -1,11 +1,13 @@
 package com.app.dw2023.Activity
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.core.content.ContextCompat
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.app.dw2023.R
+import com.app.dw2023.ScannerActivity
 import com.app.dw2023.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -17,12 +19,15 @@ class MainActivity : AppCompatActivity() {
         mainBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(mainBinding.root)
 
-
         supportActionBar?.hide()
-
         window.navigationBarColor = ContextCompat.getColor(this, R.color.blackNavBar)
 
         mainBinding.bottomNavView.background = null
+
+        mainBinding.fab.setOnClickListener {
+            val intent = Intent(this, ScannerActivity::class.java)
+            startActivity(intent)
+        }
 
         val navController = findNavController(R.id.fragmentContainerView)
         mainBinding.bottomNavView.setupWithNavController(navController)

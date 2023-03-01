@@ -1,4 +1,4 @@
-package com.app.dw2023
+package com.app.dw2023.Adapter
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -9,6 +9,8 @@ import android.widget.TextView
 import androidx.appcompat.widget.AppCompatButton
 import androidx.recyclerview.widget.RecyclerView
 import com.app.dw2023.Constants.ImagesMap
+import com.app.dw2023.Model.Task
+import com.app.dw2023.R
 
 class TaskAdapter(var tasksArray: ArrayList<Task>, var context: Context) : RecyclerView.Adapter<TaskAdapter.TaskViewHolder>() {
 
