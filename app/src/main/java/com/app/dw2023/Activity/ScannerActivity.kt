@@ -1,11 +1,15 @@
-package com.app.dw2023
+package com.app.dw2023.Activity
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.app.dw2023.R
 import com.budiyev.android.codescanner.AutoFocusMode
 import com.budiyev.android.codescanner.CodeScanner
 import com.budiyev.android.codescanner.CodeScannerView
@@ -16,6 +20,7 @@ import com.budiyev.android.codescanner.ScanMode
 class ScannerActivity : AppCompatActivity() {
     private lateinit var codeScanner: CodeScanner
     private val cameraRequestCode = 1
+    private lateinit var sharedPreferences: SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,6 +28,8 @@ class ScannerActivity : AppCompatActivity() {
 
         supportActionBar?.hide()
         window.navigationBarColor = ContextCompat.getColor(this, R.color.blackNavBar)
+
+        sharedPreferences = getSharedPreferences("progress", Context.MODE_PRIVATE)
 
         if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.CAMERA), cameraRequestCode)
@@ -52,7 +59,10 @@ class ScannerActivity : AppCompatActivity() {
         // Callbacks
         codeScanner.decodeCallback = DecodeCallback {
             runOnUiThread {
-                Toast.makeText(this, "Scan result: ${it.text}", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, it.text, Toast.LENGTH_LONG).show()
+                val scanRes = it.text
+                Log.d("verySecretMessage", "added new code locally")
+                MainActivity.loadedQrCodes.add(scanRes)
                 finish()
             }
         }
@@ -92,6 +102,8 @@ class ScannerActivity : AppCompatActivity() {
         if (::codeScanner.isInitialized) {
             codeScanner.releaseResources()
         }
+        sharedPreferences.edit().putStringSet("qr_codes_key", MainActivity.loadedQrCodes).apply()
+        Log.d("verySecretMessage", "Scanner onPause, saved codes")
         super.onPause()
     }
 }

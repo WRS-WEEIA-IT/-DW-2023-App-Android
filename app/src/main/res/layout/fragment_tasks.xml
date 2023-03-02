@@ -41,12 +41,12 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewPoints"
+        app:layout_constraintTop_toBottomOf="@+id/tasksTextViewPoints"
         tools:itemCount="10"
         tools:listitem="@layout/task_card_design" />
 
     <TextView
-        android:id="@+id/textViewPoints"
+        android:id="@+id/tasksTextViewPoints"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
