@@ -14,7 +14,7 @@ import com.app.dw2023.R
 
 class SettingsFragment : Fragment() {
 
-    lateinit var sharedPreferences: SharedPreferences
+    private lateinit var sharedPreferences: SharedPreferences
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -25,7 +25,7 @@ class SettingsFragment : Fragment() {
 
         AppData.lastSelectedIndex = SETTINGS_FRAGMENT_INDEX
 
-//        debugClearData()
+        debugClearData()
 
         return view
     }

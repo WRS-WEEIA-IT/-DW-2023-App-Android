@@ -4,20 +4,15 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
+import android.os.*
 import android.util.Log
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.app.dw2023.Global.*
 import com.app.dw2023.R
-import com.budiyev.android.codescanner.AutoFocusMode
-import com.budiyev.android.codescanner.CodeScanner
-import com.budiyev.android.codescanner.CodeScannerView
-import com.budiyev.android.codescanner.DecodeCallback
-import com.budiyev.android.codescanner.ErrorCallback
-import com.budiyev.android.codescanner.ScanMode
+import com.budiyev.android.codescanner.*
 
 class ScannerActivity : AppCompatActivity() {
     private lateinit var codeScanner: CodeScanner
@@ -72,14 +67,14 @@ class ScannerActivity : AppCompatActivity() {
                 Toast.makeText(this, it.text, Toast.LENGTH_LONG).show()
                 val scanRes = it.text
                 if (AppData.loadedQrCodes.add(scanRes)) {
-                    Log.d("verySecretMessage", "Added new unique QR code")
                     if (!cleanFakeCodesFromDevice()) {
-                        Log.d("verySecretMessage", "New QR code wasn't deleted, so it's real")
                         savePoints()
-                        Log.d("verySecretMessage", "Added new points")
+                        vibrateSuccessful()
                     } else {
-                        Log.d("verySecretMessage", "This QR is fake, so it was just deleted")
+                        vibrateFailure()
                     }
+                } else {
+                    vibrateFailure()
                 }
                 returnToMainActivity()
                 Log.d("verySecretMessage", "Return to Main Activity")
@@ -155,5 +150,42 @@ class ScannerActivity : AppCompatActivity() {
         val intent = Intent(this, MainActivity::class.java)
         intent.putExtra(PREF_ACTIVITY_AFTER_SCANNER, true)
         startActivity(intent)
+    }
+
+    private fun vibrateFailure() {
+        val vibrator = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            val vibratorManager =
+                getSystemService(Context.VIBRATOR_MANAGER_SERVICE) as VibratorManager
+            vibratorManager.defaultVibrator
+        } else {
+            @Suppress("DEPRECATION")
+            getSystemService(VIBRATOR_SERVICE) as Vibrator
+        }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            vibrator.vibrate(VibrationEffect.createWaveform(longArrayOf(0, 250, 100, 250, 100, 250), intArrayOf(0, 255, 0, 255, 0, 255), -1))
+        } else {
+            val pattern = longArrayOf(0, 250, 100, 250, 100, 250)
+            @Suppress("DEPRECATION")
+            vibrator.vibrate(pattern, -1)
+        }
+    }
+
+    private fun vibrateSuccessful() {
+        val vibrator = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            val vibratorManager =
+                getSystemService(Context.VIBRATOR_MANAGER_SERVICE) as VibratorManager
+            vibratorManager.defaultVibrator
+        } else {
+            @Suppress("DEPRECATION")
+            getSystemService(VIBRATOR_SERVICE) as Vibrator
+        }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            vibrator.vibrate(VibrationEffect.createOneShot(800, VibrationEffect.DEFAULT_AMPLITUDE))
+        } else {
+            @Suppress("DEPRECATION")
+            vibrator.vibrate(800)
+        }
     }
 }

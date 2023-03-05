@@ -14,8 +14,8 @@ import com.app.dw2023.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 
-    lateinit var mainBinding: ActivityMainBinding
-    lateinit var sharedPreferences: SharedPreferences
+    private lateinit var mainBinding: ActivityMainBinding
+    private lateinit var sharedPreferences: SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
