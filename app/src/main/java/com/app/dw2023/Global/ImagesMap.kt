@@ -1,4 +1,4 @@
-package com.app.dw2023.Constants
+package com.app.dw2023.Global
 
 import com.app.dw2023.R
 

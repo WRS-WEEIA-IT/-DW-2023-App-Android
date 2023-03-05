@@ -1,6 +1,7 @@
 package com.app.dw2023.Activity
 
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
@@ -9,6 +10,7 @@ import android.util.Log
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.app.dw2023.Global.*
 import com.app.dw2023.R
 import com.budiyev.android.codescanner.AutoFocusMode
 import com.budiyev.android.codescanner.CodeScanner
@@ -29,10 +31,18 @@ class ScannerActivity : AppCompatActivity() {
         supportActionBar?.hide()
         window.navigationBarColor = ContextCompat.getColor(this, R.color.blackNavBar)
 
-        sharedPreferences = getSharedPreferences("progress", Context.MODE_PRIVATE)
+        sharedPreferences = getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
 
-        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.CAMERA), cameraRequestCode)
+        if (ContextCompat.checkSelfPermission(
+                this,
+                android.Manifest.permission.CAMERA
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf(android.Manifest.permission.CAMERA),
+                cameraRequestCode
+            )
         } else {
             startScan()
         }
@@ -61,15 +71,27 @@ class ScannerActivity : AppCompatActivity() {
             runOnUiThread {
                 Toast.makeText(this, it.text, Toast.LENGTH_LONG).show()
                 val scanRes = it.text
-                Log.d("verySecretMessage", "added new code locally")
-                MainActivity.loadedQrCodes.add(scanRes)
+                if (AppData.loadedQrCodes.add(scanRes)) {
+                    Log.d("verySecretMessage", "Added new unique QR code")
+                    if (!cleanFakeCodesFromDevice()) {
+                        Log.d("verySecretMessage", "New QR code wasn't deleted, so it's real")
+                        savePoints()
+                        Log.d("verySecretMessage", "Added new points")
+                    } else {
+                        Log.d("verySecretMessage", "This QR is fake, so it was just deleted")
+                    }
+                }
+                returnToMainActivity()
+                Log.d("verySecretMessage", "Return to Main Activity")
                 finish()
             }
         }
         codeScanner.errorCallback = ErrorCallback { // or ErrorCallback.SUPPRESS
             runOnUiThread {
-                Toast.makeText(this, "Camera initialization error: ${it.message}",
-                    Toast.LENGTH_LONG).show()
+                Toast.makeText(
+                    this, "Camera initialization error: ${it.message}",
+                    Toast.LENGTH_LONG
+                ).show()
             }
         }
 
@@ -87,6 +109,7 @@ class ScannerActivity : AppCompatActivity() {
         if (requestCode == cameraRequestCode && grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
             startScan()
         } else {
+            returnToMainActivity()
             finish()
         }
     }
@@ -102,8 +125,35 @@ class ScannerActivity : AppCompatActivity() {
         if (::codeScanner.isInitialized) {
             codeScanner.releaseResources()
         }
-        sharedPreferences.edit().putStringSet("qr_codes_key", MainActivity.loadedQrCodes).apply()
-        Log.d("verySecretMessage", "Scanner onPause, saved codes")
         super.onPause()
+    }
+
+    override fun onBackPressed() {
+        returnToMainActivity()
+        finish()
+        onBackPressedDispatcher.onBackPressed()
+    }
+
+    private fun cleanFakeCodesFromDevice(): Boolean {
+        AppData.validQRCodes = AppData.tasksList.mapNotNull { it.qrCode }
+        return AppData.loadedQrCodes.retainAll(AppData.validQRCodes.toSet())
+    }
+
+    private fun savePoints() {
+        AppData.pointsList =
+            AppData.tasksList.filter { AppData.loadedQrCodes.contains(it.qrCode) }
+                .map { it.points!!.toInt() }
+        val totalScore = AppData.pointsList.sum()
+        if (totalScore > AppData.gainedPoints) {
+            AppData.gainedPoints = totalScore
+        }
+        sharedPreferences.edit().putInt(PREF_GAINED_POINTS, AppData.gainedPoints).apply()
+        sharedPreferences.edit().putStringSet(PREF_QR_CODES, AppData.loadedQrCodes).apply()
+    }
+
+    private fun returnToMainActivity() {
+        val intent = Intent(this, MainActivity::class.java)
+        intent.putExtra(PREF_ACTIVITY_AFTER_SCANNER, true)
+        startActivity(intent)
     }
 }

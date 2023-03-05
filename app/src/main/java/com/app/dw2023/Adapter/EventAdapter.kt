@@ -10,7 +10,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatButton
 import androidx.recyclerview.widget.RecyclerView
-import com.app.dw2023.Constants.ImagesMap
+import com.app.dw2023.Global.ImagesMap
 import com.app.dw2023.Model.Event
 import com.app.dw2023.R
 import java.text.SimpleDateFormat

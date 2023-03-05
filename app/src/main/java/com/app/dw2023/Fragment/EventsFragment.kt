@@ -10,6 +10,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.app.dw2023.Model.Event
 import com.app.dw2023.Adapter.EventAdapter
+import com.app.dw2023.Global.AppData
+import com.app.dw2023.Global.EVENTS_FRAGMENT_INDEX
 import com.app.dw2023.R
 import com.google.firebase.firestore.DocumentChange
 import com.google.firebase.firestore.EventListener
@@ -30,6 +32,8 @@ class EventsFragment : Fragment() {
     ): View? {
 
         val view = inflater.inflate(R.layout.fragment_events, container, false)
+
+        AppData.lastSelectedIndex = EVENTS_FRAGMENT_INDEX
 
         recyclerView = view.findViewById(R.id.recyclerViewEvents)
         recyclerView.layoutManager = LinearLayoutManager(activity)

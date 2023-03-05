@@ -9,8 +9,8 @@ import android.widget.TextView
 import androidx.appcompat.widget.AppCompatButton
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
-import com.app.dw2023.Activity.MainActivity
-import com.app.dw2023.Constants.ImagesMap
+import com.app.dw2023.Global.AppData
+import com.app.dw2023.Global.ImagesMap
 import com.app.dw2023.Model.Task
 import com.app.dw2023.R
 
@@ -41,7 +41,7 @@ class TaskAdapter(var tasksArray: ArrayList<Task>, var context: Context) : Recyc
         holder.taskTitle.text = task.title
         holder.taskTips.text = task.description
 
-        if (MainActivity.loadedQrCodes.contains(task.qrCode)) {
+        if (AppData.loadedQrCodes.contains(task.qrCode)) {
             holder.taskConstraintLayout.alpha = 0.4F
             holder.taskQRCodeImageView.setImageResource(R.drawable.tasks_completed)
         }
