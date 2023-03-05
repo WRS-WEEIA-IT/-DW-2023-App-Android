@@ -53,6 +53,7 @@
         app:layout_constraintTop_toTopOf="@id/guidelineHalfScreen">
 
         <ScrollView
+            android:id="@+id/homeScrollView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="fill">
@@ -108,7 +109,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@drawable/home_info_gradient"
-                        android:elevation="2dp"/>
+                        android:elevation="2dp" />
                 </androidx.cardview.widget.CardView>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
