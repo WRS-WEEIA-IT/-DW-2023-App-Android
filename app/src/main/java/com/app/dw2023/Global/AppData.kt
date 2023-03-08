@@ -1,5 +1,6 @@
 package com.app.dw2023.Global
 
+import com.app.dw2023.Model.Event
 import com.app.dw2023.Model.Task
 
 const val HOME_FRAGMENT_INDEX = 0
@@ -20,4 +21,5 @@ object AppData {
     var validQRCodes = listOf<String>()
     var pointsList = listOf<Int>()
     var gainedPoints = 0
+    var eventList = arrayListOf<Event>()
 }
