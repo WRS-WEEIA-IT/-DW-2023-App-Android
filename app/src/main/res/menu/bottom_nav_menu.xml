@@ -17,8 +17,8 @@
         android:title="@string/tasks"
         android:icon="@drawable/ic_task"/>
 
-    <item android:id="@+id/settingsFragment"
-        android:title="@string/settings"
-        android:icon="@drawable/ic_settings"/>
+    <item android:id="@+id/infoFragment"
+        android:title="@string/info"
+        android:icon="@drawable/ic_info"/>
 
 </menu>

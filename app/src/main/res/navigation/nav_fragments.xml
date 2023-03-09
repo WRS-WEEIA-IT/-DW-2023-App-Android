@@ -21,8 +21,8 @@
         android:label="fragment_tasks"
         tools:layout="@layout/fragment_tasks" />
     <fragment
-        android:id="@+id/settingsFragment"
-        android:name="com.app.dw2023.Fragment.SettingsFragment"
-        android:label="fragment_settings"
-        tools:layout="@layout/fragment_settings" />
+        android:id="@+id/infoFragment"
+        android:name="com.app.dw2023.Fragment.InfoFragment"
+        android:label="fragment_info"
+        tools:layout="@layout/fragment_info" />
 </navigation>

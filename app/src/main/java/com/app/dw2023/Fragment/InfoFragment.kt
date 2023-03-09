@@ -12,7 +12,7 @@ import com.app.dw2023.Global.PREF_NAME
 import com.app.dw2023.Global.SETTINGS_FRAGMENT_INDEX
 import com.app.dw2023.R
 
-class SettingsFragment : Fragment() {
+class InfoFragment : Fragment() {
 
     private lateinit var sharedPreferences: SharedPreferences
 
@@ -21,7 +21,7 @@ class SettingsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        val view = inflater.inflate(R.layout.fragment_settings, container, false)
+        val view = inflater.inflate(R.layout.fragment_info, container, false)
 
         AppData.lastSelectedIndex = SETTINGS_FRAGMENT_INDEX
 
