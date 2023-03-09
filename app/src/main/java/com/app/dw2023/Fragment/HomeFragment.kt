@@ -97,6 +97,26 @@ class HomeFragment : Fragment() {
                     }
 
                     AppData.eventList = ArrayList<Event>(AppData.eventList.distinct())
+                }
+            })
+
+        db.collection("workshops").whereGreaterThan("timeEnd", Timestamp.now())
+            .addSnapshotListener(object : EventListener<QuerySnapshot> {
+                override fun onEvent(value: QuerySnapshot?, error: FirebaseFirestoreException?) {
+
+                    if (error != null) {
+                        Log.e(LOG_MESSAGE, error.toString())
+                        return
+                    }
+
+                    for (dc: DocumentChange in value?.documentChanges!!) {
+                        if (dc.type == DocumentChange.Type.ADDED) {
+                            val event = dc.document.toObject(Event::class.java)
+                            AppData.eventList.add(event)
+                        }
+                    }
+
+                    AppData.eventList = ArrayList<Event>(AppData.eventList.distinct())
                     setUpcomingEvent()
                 }
             })
