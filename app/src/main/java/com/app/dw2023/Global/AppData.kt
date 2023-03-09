@@ -3,6 +3,8 @@ package com.app.dw2023.Global
 import com.app.dw2023.Model.Event
 import com.app.dw2023.Model.Task
 
+const val LOG_MESSAGE = "verySecretMessage"
+
 const val HOME_FRAGMENT_INDEX = 0
 const val EVENTS_FRAGMENT_INDEX = 1
 const val TASKS_FRAGMENT_INDEX = 3

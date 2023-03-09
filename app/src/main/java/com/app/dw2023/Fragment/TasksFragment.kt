@@ -6,22 +6,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.app.dw2023.R
-import com.app.dw2023.Model.Task
 import com.app.dw2023.Adapter.TaskAdapter
 import com.app.dw2023.Global.AppData
 import com.app.dw2023.Global.TASKS_FRAGMENT_INDEX
-import com.google.firebase.firestore.*
 
 class TasksFragment : Fragment() {
 
-    lateinit var recyclerView: RecyclerView
-    lateinit var tasksAdapter: TaskAdapter
-    lateinit var db : FirebaseFirestore
-    lateinit var tasksPoints: TextView
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var tasksAdapter: TaskAdapter
+    private lateinit var tasksPoints: TextView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,36 +31,12 @@ class TasksFragment : Fragment() {
         recyclerView.layoutManager = LinearLayoutManager(activity)
         tasksPoints = view.findViewById(R.id.tasksTextViewPoints)
 
-        AppData.tasksList = arrayListOf()
-
         tasksAdapter = TaskAdapter(AppData.tasksList, requireContext())
         tasksPoints.text = AppData.gainedPoints.toString()
         recyclerView.adapter = tasksAdapter
 
-        TaskChangeListener()
+        tasksAdapter.notifyDataSetChanged()
 
         return view
-    }
-
-    private fun TaskChangeListener() {
-
-        db = FirebaseFirestore.getInstance()
-        db.collection("tasks")
-            .addSnapshotListener(object : EventListener<QuerySnapshot> {
-                override fun onEvent(value: QuerySnapshot?, error: FirebaseFirestoreException?) {
-
-                    if (error != null) {
-                        Toast.makeText(activity, "Firestore error hehe", Toast.LENGTH_SHORT).show()
-                        return
-                    }
-
-                    for (dc: DocumentChange in value?.documentChanges!!) {
-                        if (dc.type == DocumentChange.Type.ADDED) {
-                            AppData.tasksList.add(dc.document.toObject(Task::class.java))
-                        }
-                    }
-                    tasksAdapter.notifyDataSetChanged()
-                }
-            })
     }
 }

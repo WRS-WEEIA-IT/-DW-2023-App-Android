@@ -12,10 +12,15 @@ import android.widget.ImageView
 import android.widget.ScrollView
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatButton
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.app.dw2023.Adapter.TaskAdapter
 import com.app.dw2023.Global.AppData
 import com.app.dw2023.Global.HOME_FRAGMENT_INDEX
 import com.app.dw2023.Global.ImagesMap
+import com.app.dw2023.Global.LOG_MESSAGE
 import com.app.dw2023.Model.Event
+import com.app.dw2023.Model.Task
 import com.app.dw2023.R
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.*
@@ -34,6 +39,9 @@ class HomeFragment : Fragment() {
     private lateinit var homeEventSignUpButton: AppCompatButton
     private lateinit var homeEventImageView: ImageView
 
+    private lateinit var horizontalRecyclerView: RecyclerView
+    private lateinit var adapter: TaskAdapter
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -49,6 +57,11 @@ class HomeFragment : Fragment() {
         homeEventSignUpButton = view.findViewById(R.id.homeEventCardSignUpButton)
         homeEventImageView = view.findViewById(R.id.homeEventCardImageView)
 
+        horizontalRecyclerView = view.findViewById(R.id.homeTasksRecyclerView)
+        horizontalRecyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        adapter = TaskAdapter(AppData.tasksList, requireContext())
+        horizontalRecyclerView.adapter = adapter
+
         scrollView.isVerticalScrollBarEnabled = false
         homeEventSignUpButton.setOnClickListener {
             val uri = Uri.parse("https://weeia.p.lodz.pl/")
@@ -56,14 +69,15 @@ class HomeFragment : Fragment() {
             startActivity(intent)
         }
 
-        dataChangeListener()
+        eventChangeListener()
+        tasksChangeListener()
 
         return view
     }
 
-    private fun dataChangeListener() {
+    private fun eventChangeListener() {
 
-        AppData.eventList = arrayListOf()
+        AppData.eventList.clear()
 
         db = FirebaseFirestore.getInstance()
         db.collection("lectures").whereGreaterThan("timeEnd", Timestamp.now())
@@ -71,7 +85,7 @@ class HomeFragment : Fragment() {
                 override fun onEvent(value: QuerySnapshot?, error: FirebaseFirestoreException?) {
 
                     if (error != null) {
-                        Log.e("verySecretMessage", error.toString())
+                        Log.e(LOG_MESSAGE, error.toString())
                         return
                     }
 
@@ -84,7 +98,33 @@ class HomeFragment : Fragment() {
 
                     AppData.eventList = ArrayList<Event>(AppData.eventList.distinct())
                     setUpcomingEvent()
-                    Log.d("verySecretMessage", "Something changed")
+                }
+            })
+    }
+
+    private fun tasksChangeListener() {
+
+        AppData.tasksList.clear()
+
+        db = FirebaseFirestore.getInstance()
+        db.collection("tasks")
+            .addSnapshotListener(object : EventListener<QuerySnapshot> {
+                override fun onEvent(value: QuerySnapshot?, error: FirebaseFirestoreException?) {
+
+                    if (error != null) {
+                        Log.e(LOG_MESSAGE, error.toString())
+                        return
+                    }
+
+                    for (dc: DocumentChange in value?.documentChanges!!) {
+                        if (dc.type == DocumentChange.Type.ADDED) {
+                            val task = dc.document.toObject(Task::class.java)
+                            AppData.tasksList.add(task)
+                        }
+                    }
+
+                    AppData.tasksList = ArrayList<Task>(AppData.tasksList.distinct())
+                    adapter.notifyDataSetChanged()
                 }
             })
     }
