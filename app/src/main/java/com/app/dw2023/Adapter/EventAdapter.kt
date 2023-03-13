@@ -6,9 +6,11 @@ import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatButton
+import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.app.dw2023.Global.ImagesMap
 import com.app.dw2023.Model.Event
@@ -25,6 +27,7 @@ class EventAdapter(var eventList: ArrayList<Event>, var context: Context): Recyc
         var eventCardDate : TextView = itemView.findViewById(R.id.eventCardDate)
         var eventCardSignUpButton : AppCompatButton = itemView.findViewById(R.id.eventCardSignUpButton)
         var eventCardImageView : ImageView = itemView.findViewById(R.id.eventCardImageView)
+        var eventCardView: CardView = itemView.findViewById(R.id.eventCardView)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EventViewHolder {
@@ -34,7 +37,10 @@ class EventAdapter(var eventList: ArrayList<Event>, var context: Context): Recyc
 
     override fun onBindViewHolder(holder: EventViewHolder, position: Int) {
         val event = eventList[position]
-        holder.eventCardTitle.text = event.partner
+        val type = if (event.eventType == "lecture") {
+            "Lecture"
+        } else "Workshop"
+        holder.eventCardTitle.text = type
         holder.eventCardDesc.text = event.title
 
         val dateStart = event.timeStart?.toDate()
@@ -58,6 +64,8 @@ class EventAdapter(var eventList: ArrayList<Event>, var context: Context): Recyc
             val intent = Intent(Intent.ACTION_VIEW, uri)
             context.startActivity(intent)
         }
+
+        holder.eventCardView.startAnimation(AnimationUtils.loadAnimation(holder.itemView.context, R.anim.item_anim))
     }
 
     override fun getItemCount(): Int {

@@ -29,11 +29,13 @@
     <string name="tips_to_complete">Tips to complete, these are tips to complete</string>
     <string name="welcome_on_weeia">Welcome on WEEIA!</string>
     <string name="example_task_title">Task 1</string>
+    <string name="see_all">See all</string>
 
-    <string name="settings_title">Settings</string>
     <string name="contact_us">Contact us</string>
     <string name="some_more_questions">Some more questions?</string>
     <string name="app_language">Application language</string>
-    <string name="info">Info</string>
+    <string name="info">Information</string>
+    <string name="app_id">App ID: #</string>
+    <string name="welcome_in_dw_app">Hi! Welcome to DW App!</string>
 
 </resources>

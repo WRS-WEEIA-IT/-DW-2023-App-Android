@@ -12,13 +12,12 @@ import android.widget.ImageView
 import android.widget.ScrollView
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatButton
+import androidx.core.view.isInvisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.app.dw2023.Activity.MainActivity
 import com.app.dw2023.Adapter.TaskAdapter
-import com.app.dw2023.Global.AppData
-import com.app.dw2023.Global.HOME_FRAGMENT_INDEX
-import com.app.dw2023.Global.ImagesMap
-import com.app.dw2023.Global.LOG_MESSAGE
+import com.app.dw2023.Global.*
 import com.app.dw2023.Model.Event
 import com.app.dw2023.Model.Task
 import com.app.dw2023.R
@@ -27,6 +26,7 @@ import com.google.firebase.firestore.*
 import com.google.firebase.firestore.EventListener
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 
 class HomeFragment : Fragment() {
 
@@ -38,6 +38,12 @@ class HomeFragment : Fragment() {
     private lateinit var homeEventDate: TextView
     private lateinit var homeEventSignUpButton: AppCompatButton
     private lateinit var homeEventImageView: ImageView
+    private lateinit var seeAllEventTextView: TextView
+    private lateinit var seeAllEventArrow: ImageView
+    private lateinit var seeAllTaskTextView: TextView
+    private lateinit var seeAllTaskArrow: ImageView
+
+    lateinit var tasksNotDone: ArrayList<Task>
 
     private lateinit var horizontalRecyclerView: RecyclerView
     private lateinit var adapter: TaskAdapter
@@ -56,10 +62,19 @@ class HomeFragment : Fragment() {
         homeEventDate = view.findViewById(R.id.homeEventCardDate)
         homeEventSignUpButton = view.findViewById(R.id.homeEventCardSignUpButton)
         homeEventImageView = view.findViewById(R.id.homeEventCardImageView)
+        seeAllEventTextView = view.findViewById(R.id.seeAllEventTextView)
+        seeAllEventArrow = view.findViewById(R.id.seeAllEventArrow)
+        seeAllTaskTextView = view.findViewById(R.id.seeAllTasksTextView)
+        seeAllTaskArrow = view.findViewById(R.id.seeAllTasksArrow)
+
+        tasksNotDone = ArrayList<Task>()
+
+        hideNotLoaded()
+        setSeeAllOnClickListeners()
 
         horizontalRecyclerView = view.findViewById(R.id.homeTasksRecyclerView)
         horizontalRecyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-        adapter = TaskAdapter(AppData.tasksList, requireContext())
+        adapter = TaskAdapter(tasksNotDone, requireContext())
         horizontalRecyclerView.adapter = adapter
 
         scrollView.isVerticalScrollBarEnabled = false
@@ -95,8 +110,7 @@ class HomeFragment : Fragment() {
                             AppData.eventList.add(event)
                         }
                     }
-
-                    AppData.eventList = ArrayList<Event>(AppData.eventList.distinct())
+                    keepOnlyUniqueEvents()
                 }
             })
 
@@ -112,11 +126,12 @@ class HomeFragment : Fragment() {
                     for (dc: DocumentChange in value?.documentChanges!!) {
                         if (dc.type == DocumentChange.Type.ADDED) {
                             val event = dc.document.toObject(Event::class.java)
+                            event.eventType = "workshops"
                             AppData.eventList.add(event)
                         }
                     }
 
-                    AppData.eventList = ArrayList<Event>(AppData.eventList.distinct())
+                    keepOnlyUniqueEvents()
                     setUpcomingEvent()
                 }
             })
@@ -143,7 +158,13 @@ class HomeFragment : Fragment() {
                         }
                     }
 
-                    AppData.tasksList = ArrayList<Task>(AppData.tasksList.distinct())
+                    AppData.tasksList.filter { it.qrCode in AppData.loadedQrCodes }.forEach { it.isDone = true }
+                    keepOnlyUniqueTasks()
+                    AppData.tasksList.sortBy { it.isDone }
+
+                    tasksNotDone.clear()
+                    tasksNotDone.addAll(AppData.tasksList.filter { !it.isDone })
+                    
                     adapter.notifyDataSetChanged()
                 }
             })
@@ -155,8 +176,10 @@ class HomeFragment : Fragment() {
         AppData.eventList.sortWith(compareBy({it.timeStart}, {it.timeEnd}))
 
         val upcomingEvent = AppData.eventList.first()
-
-        homeEventCompany.text = upcomingEvent.partner
+        val type = if (upcomingEvent.eventType == "lecture") {
+            "Lecture"
+        } else "Workshop"
+        homeEventCompany.text = type
         homeEventDesc.text = upcomingEvent.title
 
         val imageSource = upcomingEvent.imageSource
@@ -173,6 +196,61 @@ class HomeFragment : Fragment() {
 
         val date = "${sdfStart.format(dateStart!!)} - ${sdfEnd.format(dateEnd!!)}"
         homeEventDate.text = date
+
+        showLoaded()
+    }
+
+    private fun setSeeAllOnClickListeners() {
+        seeAllEventTextView.setOnClickListener {
+            (activity as MainActivity).mainBinding.bottomNavView.selectedItemId = (activity as MainActivity).mainBinding.bottomNavView.menu.getItem(
+                EVENTS_FRAGMENT_INDEX).itemId
+        }
+        seeAllEventArrow.setOnClickListener {
+            (activity as MainActivity).mainBinding.bottomNavView.selectedItemId = (activity as MainActivity).mainBinding.bottomNavView.menu.getItem(
+                EVENTS_FRAGMENT_INDEX).itemId
+        }
+        seeAllTaskTextView.setOnClickListener {
+            (activity as MainActivity).mainBinding.bottomNavView.selectedItemId = (activity as MainActivity).mainBinding.bottomNavView.menu.getItem(
+                TASKS_FRAGMENT_INDEX).itemId
+        }
+        seeAllTaskArrow.setOnClickListener {
+            (activity as MainActivity).mainBinding.bottomNavView.selectedItemId = (activity as MainActivity).mainBinding.bottomNavView.menu.getItem(
+                TASKS_FRAGMENT_INDEX).itemId
+        }
+    }
+
+    private fun hideNotLoaded() {
+        homeEventCompany.isInvisible = true
+        homeEventDesc.isInvisible = true
+        homeEventDate.isInvisible = true
+        homeEventSignUpButton.isInvisible = true
+        homeEventImageView.isInvisible = true
+    }
+
+    private fun showLoaded() {
+        homeEventCompany.isInvisible = false
+        homeEventDesc.isInvisible = false
+        homeEventDate.isInvisible = false
+        homeEventSignUpButton.isInvisible = false
+        homeEventImageView.isInvisible = false
+    }
+
+    private fun keepOnlyUniqueTasks() {
+        val set = mutableSetOf<Task>()
+        for (task in AppData.tasksList) {
+            set.add(task)
+        }
+        AppData.tasksList.clear()
+        AppData.tasksList.addAll(set)
+    }
+
+    private fun keepOnlyUniqueEvents() {
+        val set = mutableSetOf<Event>()
+        for (task in AppData.eventList) {
+            set.add(task)
+        }
+        AppData.eventList.clear()
+        AppData.eventList.addAll(set)
     }
 
 }

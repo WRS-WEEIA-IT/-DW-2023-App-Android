@@ -5,7 +5,6 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.os.*
-import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -77,7 +76,6 @@ class ScannerActivity : AppCompatActivity() {
                     vibrateFailure()
                 }
                 returnToMainActivity()
-                Log.d("verySecretMessage", "Return to Main Activity")
                 finish()
             }
         }
@@ -137,7 +135,7 @@ class ScannerActivity : AppCompatActivity() {
     private fun savePoints() {
         AppData.pointsList =
             AppData.tasksList.filter { AppData.loadedQrCodes.contains(it.qrCode) }
-                .map { it.points!!.toInt() }
+                .map { it.points }
         val totalScore = AppData.pointsList.sum()
         if (totalScore > AppData.gainedPoints) {
             AppData.gainedPoints = totalScore
@@ -149,6 +147,7 @@ class ScannerActivity : AppCompatActivity() {
     private fun returnToMainActivity() {
         val intent = Intent(this, MainActivity::class.java)
         intent.putExtra(PREF_ACTIVITY_AFTER_SCANNER, true)
+        AppData.afterScanner = true
         startActivity(intent)
     }
 

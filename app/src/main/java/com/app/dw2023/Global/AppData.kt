@@ -24,4 +24,6 @@ object AppData {
     var pointsList = listOf<Int>()
     var gainedPoints = 0
     var eventList = arrayListOf<Event>()
+
+    var afterScanner = false
 }

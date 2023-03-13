@@ -200,6 +200,57 @@
                     app:layout_constraintTop_toBottomOf="@+id/availableTasksTextView"
                     tools:itemCount="1"
                     tools:listitem="@layout/task_card_design" />
+
+                <TextView
+                    android:id="@+id/seeAllEventTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="6dp"
+                    android:fontFamily="@font/montserrat"
+                    android:text="@string/see_all"
+                    android:textColor="@color/white"
+                    android:textSize="10sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/upcomingEventsTextView"
+                    app:layout_constraintEnd_toStartOf="@+id/seeAllEventArrow"
+                    app:layout_constraintTop_toTopOf="@+id/upcomingEventsTextView" />
+
+                <ImageView
+                    android:id="@+id/seeAllEventArrow"
+                    android:layout_width="13dp"
+                    android:layout_height="13dp"
+                    android:layout_marginEnd="16dp"
+                    android:alpha="0.8"
+                    android:contentDescription="@string/see_all"
+                    android:src="@drawable/ic_right_arrow"
+                    app:layout_constraintBottom_toBottomOf="@+id/seeAllEventTextView"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/seeAllEventTextView"
+                    app:layout_constraintVertical_bias="0.5" />
+
+                <ImageView
+                    android:id="@+id/seeAllTasksArrow"
+                    android:layout_width="13dp"
+                    android:layout_height="13dp"
+                    android:layout_marginEnd="16dp"
+                    android:alpha="0.8"
+                    android:contentDescription="@string/see_all"
+                    android:src="@drawable/ic_right_arrow"
+                    app:layout_constraintBottom_toBottomOf="@+id/seeAllTasksTextView"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/seeAllTasksTextView" />
+
+                <TextView
+                    android:id="@+id/seeAllTasksTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="6dp"
+                    android:fontFamily="@font/montserrat"
+                    android:text="@string/see_all"
+                    android:textColor="@color/white"
+                    android:textSize="10sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/availableTasksTextView"
+                    app:layout_constraintEnd_toStartOf="@+id/seeAllTasksArrow"
+                    app:layout_constraintTop_toTopOf="@+id/availableTasksTextView" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </ScrollView>
