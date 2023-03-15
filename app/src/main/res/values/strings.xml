@@ -13,6 +13,10 @@
     <string name="blob_desc">Blob</string>
     <string name="background_desc">Background</string>
     <string name="event_card_image_desc">Event Card Background Picture</string>
+    <string name="weeia_logo_desc">WEEIA</string>
+    <string name="wrs_weeia_logo_desc">WRS WEEIA</string>
+    <string name="zf_logo_desc">ZF</string>
+    <string name="commerzbank_logo_desc">Commerzbank</string>
     <string name="todo">TODO</string>
     <string name="qr_code">QR Code</string>
 
@@ -32,10 +36,14 @@
     <string name="see_all">See all</string>
 
     <string name="contact_us">Contact us</string>
-    <string name="some_more_questions">Some more questions?</string>
+    <string name="some_more_questions">Some questions?</string>
     <string name="app_language">Application language</string>
     <string name="info">Information</string>
     <string name="app_id">App ID: #</string>
     <string name="welcome_in_dw_app">Hi! Welcome to DW App!</string>
+    <string name="info_app_desc">There are some information about event, app and your profile.</string>
+    <string name="you_have_points">You have 0 points</string>
+    <string name="organizers">Organizers</string>
+    <string name="partners">Partners</string>
 
 </resources>
