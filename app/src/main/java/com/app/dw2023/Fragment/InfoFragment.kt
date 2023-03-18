@@ -25,7 +25,7 @@ class InfoFragment : Fragment() {
 
         AppData.lastSelectedIndex = SETTINGS_FRAGMENT_INDEX
 
-//        debugClearData()
+        debugClearData()
 
         return view
     }

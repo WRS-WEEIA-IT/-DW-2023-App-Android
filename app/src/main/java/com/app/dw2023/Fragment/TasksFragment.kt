@@ -16,7 +16,6 @@ import com.app.dw2023.Global.LOG_MESSAGE
 import com.app.dw2023.Global.TASKS_FRAGMENT_INDEX
 import com.app.dw2023.Model.Task
 import com.google.firebase.firestore.*
-import java.util.ArrayList
 
 class TasksFragment : Fragment() {
 
@@ -70,6 +69,7 @@ class TasksFragment : Fragment() {
 
                     AppData.tasksList.filter { it.qrCode in AppData.loadedQrCodes }.forEach { it.isDone = true }
                     keepOnlyUniqueTasks()
+                    AppData.tasksList.sortBy { it.taskNumber }
                     AppData.tasksList.sortBy { it.isDone }
 
                     tasksAdapter.notifyDataSetChanged()

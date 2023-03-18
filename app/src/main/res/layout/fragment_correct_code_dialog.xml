@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="350dp"
+    android:layout_height="wrap_content"
+    android:background="@drawable/dialog_fragment_background"
+    tools:context=".CorrectCodeDialogFragment">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/correctTaskCardView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        app:cardBackgroundColor="@color/black"
+        app:cardCornerRadius="18dp"
+        app:cardElevation="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/correctButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView5">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/correctTasksConstraintLayout"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:background="@android:color/transparent">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/correctTasksCardPointsButton"
+                android:layout_width="80dp"
+                android:layout_height="26dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/event_card_sign_up_button"
+                android:backgroundTint="@null"
+                android:elevation="1dp"
+                android:fontFamily="@font/montserrat_medium"
+                android:text="@string/button_points"
+                android:textColor="@color/white"
+                android:textSize="10sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <ImageView
+                android:id="@+id/correctTasksCardImageView"
+                android:layout_width="297dp"
+                android:layout_height="152dp"
+                android:alpha="0.2"
+                android:contentDescription="@string/event_card_image_desc"
+                android:elevation="0dp"
+                android:scaleType="centerCrop"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/event_card_background" />
+
+            <ImageView
+                android:id="@+id/correctTasksQRCodeImageView"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_marginEnd="16dp"
+                android:contentDescription="@string/qr_code"
+                android:elevation="1dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/correctTasksCardImageView"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.38"
+                app:srcCompat="@drawable/tasks_qr_code" />
+
+            <TextView
+                android:id="@+id/correctTasksQRCodeTextView"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:elevation="1dp"
+                android:fontFamily="@font/montserrat_light"
+                android:text="@string/scan_to_complete"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="8sp"
+                app:layout_constraintEnd_toEndOf="@+id/correctTasksQRCodeImageView"
+                app:layout_constraintStart_toStartOf="@+id/correctTasksQRCodeImageView"
+                app:layout_constraintTop_toBottomOf="@+id/correctTasksQRCodeImageView" />
+
+            <TextView
+                android:id="@+id/correctTasksTipsTextView"
+                android:layout_width="150dp"
+                android:layout_height="32dp"
+                android:layout_marginStart="24dp"
+                android:fontFamily="@font/montserrat_light"
+                android:text="@string/tips_to_complete"
+                android:textAlignment="textStart"
+                android:textColor="@color/white"
+                android:textSize="8sp"
+                app:layout_constraintBottom_toTopOf="@+id/correctTasksCardPointsButton"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/correctTasksTitleTextView" />
+
+            <TextView
+                android:id="@+id/correctTasksTitleTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="4dp"
+                android:fontFamily="@font/montserrat"
+                android:text="@string/welcome_on_weeia"
+                android:textColor="@color/white"
+                android:textSize="12sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/correctTasksNumberTextView" />
+
+            <TextView
+                android:id="@+id/correctTasksNumberTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="24dp"
+                android:fontFamily="@font/montserrat_medium"
+                android:text="@string/example_task_title"
+                android:textColor="@color/white"
+                android:textSize="11sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="2dp"
+        android:fontFamily="@font/montserrat"
+        android:text="@string/task_completed"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/correctTaskCardView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/correctButton"
+        android:layout_width="120dp"
+        android:layout_height="32dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/event_card_sign_up_button"
+        android:fontFamily="@font/montserrat_medium"
+        android:text="@string/ok"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/correctTaskCardView" />
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -164,6 +164,7 @@ class HomeFragment : Fragment() {
 
                     tasksNotDone.clear()
                     tasksNotDone.addAll(AppData.tasksList.filter { !it.isDone })
+                    tasksNotDone.sortBy { it.taskNumber }
 
                     adapter.notifyDataSetChanged()
                 }

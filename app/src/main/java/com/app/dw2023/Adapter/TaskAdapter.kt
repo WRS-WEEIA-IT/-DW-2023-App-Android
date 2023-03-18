@@ -37,7 +37,7 @@ class TaskAdapter(var tasksArray: ArrayList<Task>, var context: Context) : Recyc
     override fun onBindViewHolder(holder: TaskViewHolder, position: Int) {
         val task = tasksArray[position]
         val points = "${task.points} points"
-        val taskNumberText = "Task ${position + 1}"
+        val taskNumberText = "Task ${task.taskNumber}"
 
         holder.taskButton.text = points
         holder.taskNumber.text = taskNumberText

@@ -9,14 +9,21 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.FragmentManager
+import com.app.dw2023.CorrectCodeDialogFragment
 import com.app.dw2023.Global.*
 import com.app.dw2023.R
+import com.app.dw2023.Fragment.DialogFragment.RepeatedCodeDialogFragment
+import com.app.dw2023.Fragment.DialogFragment.WrongCodeDialogFragment
+import com.app.dw2023.Model.Task
 import com.budiyev.android.codescanner.*
 
 class ScannerActivity : AppCompatActivity() {
     private lateinit var codeScanner: CodeScanner
     private val cameraRequestCode = 1
     private lateinit var sharedPreferences: SharedPreferences
+
+    var doneTask: Task? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,20 +70,26 @@ class ScannerActivity : AppCompatActivity() {
         // Callbacks
         codeScanner.decodeCallback = DecodeCallback {
             runOnUiThread {
-                Toast.makeText(this, it.text, Toast.LENGTH_LONG).show()
+//                Toast.makeText(this, it.text, Toast.LENGTH_LONG).show()
                 val scanRes = it.text
                 if (AppData.loadedQrCodes.add(scanRes)) {
                     if (!cleanFakeCodesFromDevice()) {
+                        doneTask = AppData.tasksList.find { it.qrCode == scanRes }
+                        if (doneTask == null) {
+                            returnToMainActivity()
+                            finish()
+                        }
+                        showCorrectCodeDialogFragment()
                         savePoints()
                         vibrateSuccessful()
                     } else {
                         vibrateFailure()
+                        showWrongCodeDialogFragment()
                     }
                 } else {
                     vibrateFailure()
+                    showRepeatedCodeDialogFragment()
                 }
-                returnToMainActivity()
-                finish()
             }
         }
         codeScanner.errorCallback = ErrorCallback { // or ErrorCallback.SUPPRESS
@@ -144,7 +157,7 @@ class ScannerActivity : AppCompatActivity() {
         sharedPreferences.edit().putStringSet(PREF_QR_CODES, AppData.loadedQrCodes).apply()
     }
 
-    private fun returnToMainActivity() {
+    fun returnToMainActivity() {
         val intent = Intent(this, MainActivity::class.java)
         intent.putExtra(PREF_ACTIVITY_AFTER_SCANNER, true)
         AppData.afterScanner = true
@@ -186,5 +199,37 @@ class ScannerActivity : AppCompatActivity() {
             @Suppress("DEPRECATION")
             vibrator.vibrate(800)
         }
+    }
+
+    private fun showWrongCodeDialogFragment() {
+        val fragmentManager : FragmentManager = supportFragmentManager
+        val wrongCodeDialogFragment = WrongCodeDialogFragment()
+
+        wrongCodeDialogFragment.show(fragmentManager, "WrongCodeDialogFragment")
+        wrongCodeDialogFragment.isCancelable = false
+    }
+
+    private fun showRepeatedCodeDialogFragment() {
+        val fragmentManager : FragmentManager = supportFragmentManager
+        val repeatedCodeDialogFragment = RepeatedCodeDialogFragment()
+
+        repeatedCodeDialogFragment.show(fragmentManager, "RepeatedCodeDialogFragment")
+        repeatedCodeDialogFragment.isCancelable = false
+    }
+
+    private fun showCorrectCodeDialogFragment() {
+        val fragmentManager : FragmentManager = supportFragmentManager
+        val correctCodeDialogFragment = CorrectCodeDialogFragment()
+
+        val bundle = Bundle()
+        bundle.putInt("completedTaskPointsBundle", doneTask!!.points)
+        bundle.putInt("completedTaskTaskNumberBundle", doneTask!!.taskNumber)
+        bundle.putString("completedTaskTipsBundle", doneTask!!.description)
+        bundle.putString("completedTaskBackgroundImageBungle", doneTask!!.imageSource)
+        bundle.putString("completedTaskTitleBundle", doneTask!!.title)
+        correctCodeDialogFragment.arguments = bundle
+
+        correctCodeDialogFragment.show(fragmentManager, "CorrectCodeDialogFragment")
+        correctCodeDialogFragment.isCancelable = false
     }
 }
