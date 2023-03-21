@@ -5,7 +5,6 @@ import android.content.Intent
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import androidx.core.content.ContextCompat
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
@@ -36,7 +35,6 @@ class MainActivity : AppCompatActivity() {
         }
 
         isActivityOpenedAfterScanner = intent.getBooleanExtra(PREF_ACTIVITY_AFTER_SCANNER, false)
-        Log.d(LOG_MESSAGE, "in main $isActivityOpenedAfterScanner")
 
         val navController = findNavController(R.id.fragmentContainerView)
         mainBinding.bottomNavView.setupWithNavController(navController)

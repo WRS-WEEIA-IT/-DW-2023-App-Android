@@ -1,6 +1,8 @@
 package com.app.dw2023.Fragment
 
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -21,6 +23,7 @@ import com.app.dw2023.Global.*
 import com.app.dw2023.Model.Event
 import com.app.dw2023.Model.Task
 import com.app.dw2023.R
+import com.app.dw2023.User
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.*
 import com.google.firebase.firestore.EventListener
@@ -32,6 +35,7 @@ class HomeFragment : Fragment() {
 
     private lateinit var scrollView: ScrollView
     private lateinit var db: FirebaseFirestore
+    private lateinit var sharedPreferences: SharedPreferences
 
     private lateinit var homeEventCompany: TextView
     private lateinit var homeEventDesc: TextView
@@ -86,6 +90,8 @@ class HomeFragment : Fragment() {
 
         eventChangeListener()
         tasksChangeListener()
+
+        createOrGetID()
 
         return view
     }
@@ -254,4 +260,40 @@ class HomeFragment : Fragment() {
         AppData.eventList.addAll(set)
     }
 
+    private fun createOrGetID() {
+        sharedPreferences = requireActivity().getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
+
+        AppData.userID = sharedPreferences.getInt(PREF_USER_ID, 0)
+        if (AppData.userID == 0) {  // user ID hasn't been set yet, let's try to set it
+
+            val randomID = (0..ID_MAX_VALUE).random()
+            Log.d(LOG_MESSAGE, "Drawn random ID = $randomID")
+
+            val docUser = db.collection("users").document(randomID.toString())
+            docUser.get()
+                .addOnSuccessListener { document ->
+                    if (document != null && document.exists()) {  // user exists, can't use that randomID
+                        Log.d(LOG_MESSAGE, "User with $randomID ID already exists")
+                        return@addOnSuccessListener
+                    } else {  // user doesn't exist, can use randomID
+                        AppData.userID = randomID
+                        sharedPreferences.edit().putInt(PREF_USER_ID, randomID).apply()
+                        addUserToFirestore()
+                        Log.d(LOG_MESSAGE, "ID has been set to $randomID")
+                    }
+                }
+                .addOnFailureListener {
+                    Log.e(LOG_MESSAGE, "Error ${it.toString()}")
+                }
+        } else {  // ID was set before
+            Log.d(LOG_MESSAGE, "ID was set before and it is ${AppData.userID}")
+        }
+    }
+
+    private fun addUserToFirestore() {
+        val user = User(AppData.userID, AppData.gainedPoints, Timestamp.now(), false)
+        db.collection("users").document(AppData.userID.toString()).set(user)
+            .addOnSuccessListener { Log.d(LOG_MESSAGE, "Added new user with ${user.id} ID") }
+            .addOnFailureListener { Log.d(LOG_MESSAGE, "Error in adding new user with ${user.id} ID") }
+    }
 }
