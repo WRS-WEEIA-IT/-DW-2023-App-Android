@@ -5,6 +5,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.os.*
+import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -17,11 +18,13 @@ import com.app.dw2023.Fragment.DialogFragment.RepeatedCodeDialogFragment
 import com.app.dw2023.Fragment.DialogFragment.WrongCodeDialogFragment
 import com.app.dw2023.Model.Task
 import com.budiyev.android.codescanner.*
+import com.google.firebase.firestore.FirebaseFirestore
 
 class ScannerActivity : AppCompatActivity() {
     private lateinit var codeScanner: CodeScanner
     private val cameraRequestCode = 1
     private lateinit var sharedPreferences: SharedPreferences
+    private lateinit var db: FirebaseFirestore
 
     var doneTask: Task? = null
 
@@ -153,6 +156,8 @@ class ScannerActivity : AppCompatActivity() {
         if (totalScore > AppData.gainedPoints) {
             AppData.gainedPoints = totalScore
         }
+        updateUserPointsInFirestore()
+
         sharedPreferences.edit().putInt(PREF_GAINED_POINTS, AppData.gainedPoints).apply()
         sharedPreferences.edit().putStringSet(PREF_QR_CODES, AppData.loadedQrCodes).apply()
     }
@@ -231,5 +236,13 @@ class ScannerActivity : AppCompatActivity() {
 
         correctCodeDialogFragment.show(fragmentManager, "CorrectCodeDialogFragment")
         correctCodeDialogFragment.isCancelable = false
+    }
+
+    private fun updateUserPointsInFirestore() {
+        if (AppData.userID != 0) {
+            db = FirebaseFirestore.getInstance()
+            db.collection("users").document(AppData.userID.toString()).update("points", AppData.gainedPoints)
+            Log.d(LOG_MESSAGE, "Updated points")
+        }
     }
 }

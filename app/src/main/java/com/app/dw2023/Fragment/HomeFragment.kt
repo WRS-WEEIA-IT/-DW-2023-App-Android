@@ -266,11 +266,11 @@ class HomeFragment : Fragment() {
         AppData.userID = sharedPreferences.getInt(PREF_USER_ID, 0)
         if (AppData.userID == 0) {  // user ID hasn't been set yet, let's try to set it
 
-            val randomID = (0..ID_MAX_VALUE).random()
+            val randomID = (1..ID_MAX_VALUE).random()
             Log.d(LOG_MESSAGE, "Drawn random ID = $randomID")
 
-            val docUser = db.collection("users").document(randomID.toString())
-            docUser.get()
+            val docRef = db.collection("users").document(randomID.toString())
+            docRef.get()
                 .addOnSuccessListener { document ->
                     if (document != null && document.exists()) {  // user exists, can't use that randomID
                         Log.d(LOG_MESSAGE, "User with $randomID ID already exists")
