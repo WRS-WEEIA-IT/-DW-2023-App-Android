@@ -31,7 +31,7 @@
             android:fontFamily="@font/montserrat_light"
             android:text="@string/example_date_with_time"
             android:textColor="@color/white"
-            android:textSize="20sp"
+            android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -54,12 +54,16 @@
 
         <TextView
             android:id="@+id/eventCardDesc"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="280dp"
+            android:layout_height="40dp"
             android:layout_marginStart="24dp"
             android:layout_marginBottom="12dp"
+            android:autoSizeMaxTextSize="16sp"
+            android:autoSizeMinTextSize="8sp"
+            android:autoSizeTextType="uniform"
             android:elevation="1dp"
             android:fontFamily="@font/montserrat"
+            android:gravity="start|center"
             android:text="@string/event_card_desc_temp"
             android:textColor="@color/white"
             app:layout_constraintBottom_toTopOf="@+id/eventCardSignUpButton"

@@ -47,9 +47,7 @@ class EventAdapter(var eventList: ArrayList<Event>, var context: Context): Recyc
         val dateEnd = event.timeEnd?.toDate()
 
         val sdfStart = SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.getDefault())
-        sdfStart.timeZone = TimeZone.getTimeZone("GMT+1:00")
         val sdfEnd = SimpleDateFormat("HH:mm", Locale.getDefault())
-        sdfEnd.timeZone = TimeZone.getTimeZone("GMT+1:00")
 
         val date = "${sdfStart.format(dateStart!!)} - ${sdfEnd.format(dateEnd!!)}"
         holder.eventCardDate.text = date
@@ -60,7 +58,7 @@ class EventAdapter(var eventList: ArrayList<Event>, var context: Context): Recyc
         holder.eventCardImageView.alpha = 0.2F
 
         holder.eventCardSignUpButton.setOnClickListener {
-            val uri = Uri.parse("https://weeia.p.lodz.pl/")
+            val uri = Uri.parse("https://docs.google.com/forms/d/e/1FAIpQLSeFIvOGhhrMT6bvAaxosJENssDEa4kW-4ZJr0LpDQsLagVoNQ/closedform")
             val intent = Intent(Intent.ACTION_VIEW, uri)
             context.startActivity(intent)
         }

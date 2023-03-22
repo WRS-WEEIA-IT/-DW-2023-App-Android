@@ -81,42 +81,42 @@
 
         <TextView
             android:id="@+id/tasksTipsTextView"
-            android:layout_width="172dp"
+            android:layout_width="190dp"
             android:layout_height="32dp"
             android:layout_marginStart="24dp"
+            android:layout_marginBottom="2dp"
             android:fontFamily="@font/montserrat_light"
             android:text="@string/tips_to_complete"
             android:textAlignment="textStart"
             android:textColor="@color/white"
             android:textSize="8sp"
             app:layout_constraintBottom_toTopOf="@+id/tasksCardPointsButton"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tasksTitleTextView" />
+            app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
             android:id="@+id/tasksTitleTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
-            android:layout_marginTop="4dp"
+            android:layout_marginBottom="2dp"
             android:fontFamily="@font/montserrat"
             android:text="@string/welcome_on_weeia"
             android:textColor="@color/white"
             android:textSize="12sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tasksNumberTextView" />
+            app:layout_constraintBottom_toTopOf="@+id/tasksTipsTextView"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
             android:id="@+id/tasksNumberTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
-            android:layout_marginTop="24dp"
+            android:layout_marginBottom="2dp"
             android:fontFamily="@font/montserrat_medium"
             android:text="@string/example_task_title"
             android:textColor="@color/white"
             android:textSize="11sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintBottom_toTopOf="@+id/tasksTitleTextView"
+            app:layout_constraintStart_toStartOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

@@ -83,7 +83,7 @@ class HomeFragment : Fragment() {
 
         scrollView.isVerticalScrollBarEnabled = false
         homeEventSignUpButton.setOnClickListener {
-            val uri = Uri.parse("https://weeia.p.lodz.pl/")
+            val uri = Uri.parse("https://docs.google.com/forms/d/e/1FAIpQLSeFIvOGhhrMT6bvAaxosJENssDEa4kW-4ZJr0LpDQsLagVoNQ/closedform")
             val intent = Intent(Intent.ACTION_VIEW, uri)
             startActivity(intent)
         }
@@ -197,9 +197,7 @@ class HomeFragment : Fragment() {
         val dateEnd = upcomingEvent.timeEnd?.toDate()
 
         val sdfStart = SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.getDefault())
-        sdfStart.timeZone = TimeZone.getTimeZone("GMT+1:00")
         val sdfEnd = SimpleDateFormat("HH:mm", Locale.getDefault())
-        sdfEnd.timeZone = TimeZone.getTimeZone("GMT+1:00")
 
         val date = "${sdfStart.format(dateStart!!)} - ${sdfEnd.format(dateEnd!!)}"
         homeEventDate.text = date

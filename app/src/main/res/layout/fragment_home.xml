@@ -72,7 +72,7 @@
                     android:layout_marginStart="28dp"
                     android:layout_marginTop="16dp"
                     android:fontFamily="@font/montserrat_medium"
-                    android:text="@string/upcoming_news_title"
+                    android:text="@string/upcoming_event_title"
                     android:textColor="@color/white"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -122,7 +122,7 @@
                             android:fontFamily="@font/montserrat_light"
                             android:text="@string/example_date_with_time"
                             android:textColor="@color/white"
-                            android:textSize="20sp"
+                            android:textSize="14sp"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
@@ -145,12 +145,16 @@
 
                         <TextView
                             android:id="@+id/homeEventCardDesc"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_width="280dp"
+                            android:layout_height="40dp"
                             android:layout_marginStart="24dp"
                             android:layout_marginBottom="12dp"
+                            android:autoSizeMaxTextSize="16sp"
+                            android:autoSizeMinTextSize="8sp"
+                            android:autoSizeTextType="uniform"
                             android:elevation="1dp"
                             android:fontFamily="@font/montserrat"
+                            android:gravity="start|center"
                             android:text="@string/event_card_desc_temp"
                             android:textColor="@color/white"
                             app:layout_constraintBottom_toTopOf="@+id/homeEventCardSignUpButton"

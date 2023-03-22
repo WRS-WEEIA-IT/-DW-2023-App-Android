@@ -20,17 +20,18 @@
     <string name="todo">TODO</string>
     <string name="qr_code">QR Code</string>
 
-    <string name="upcoming_news_title">Upcoming event:</string>
+    <string name="upcoming_events_title">Upcoming events:</string>
+    <string name="upcoming_event_title">Upcoming event:</string>
     <string name="example_date_with_time">31.03.2023 10:00 – 11:30</string>
     <string name="event_card_title_temp">Szkolenie</string>
     <string name="event_card_desc_temp">Temat szkolenia</string>
-    <string name="sign_up">Zapisz się</string>
+    <string name="sign_up">Sign up</string>
 
     <string name="available_tasks_title">Available tasks:</string>
     <string name="current_points">Currently, you have earned 0 points!</string>
     <string name="button_points">10 Points</string>
     <string name="scan_to_complete">Scan QR code to complete task</string>
-    <string name="tips_to_complete">Tips to complete, these are tips to complete</string>
+    <string name="tips_to_complete">Tips to complete, these are tips to complete </string>
     <string name="welcome_on_weeia">Welcome on WEEIA!</string>
     <string name="example_task_title">Task 1</string>
     <string name="see_all">See all</string>
