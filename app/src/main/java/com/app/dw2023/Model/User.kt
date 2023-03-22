@@ -1,4 +1,4 @@
-package com.app.dw2023
+package com.app.dw2023.Model
 
 import com.google.firebase.Timestamp
 

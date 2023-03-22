@@ -50,7 +50,7 @@ class TaskAdapter(var tasksArray: ArrayList<Task>, var context: Context) : Recyc
         }
 
         val imageSource = task.imageSource
-        val drawableId = ImagesMap.imagesMap[imageSource] ?: R.drawable.event_card_background
+        val drawableId = ImagesMap.imagesMap[imageSource] ?: R.drawable.taskphoto1
         holder.taskCardImageView.setImageResource(drawableId)
 
         holder.taskButton.isClickable = false

@@ -1,4 +1,4 @@
-package com.app.dw2023
+package com.app.dw2023.Fragment.DialogFragment
 
 import android.content.DialogInterface
 import android.os.Bundle
@@ -11,6 +11,7 @@ import androidx.appcompat.widget.AppCompatButton
 import androidx.fragment.app.DialogFragment
 import com.app.dw2023.Activity.ScannerActivity
 import com.app.dw2023.Global.ImagesMap
+import com.app.dw2023.R
 
 class CorrectCodeDialogFragment : DialogFragment() {
 

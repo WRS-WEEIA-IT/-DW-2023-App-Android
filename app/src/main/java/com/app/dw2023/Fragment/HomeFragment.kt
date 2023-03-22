@@ -23,7 +23,7 @@ import com.app.dw2023.Global.*
 import com.app.dw2023.Model.Event
 import com.app.dw2023.Model.Task
 import com.app.dw2023.R
-import com.app.dw2023.User
+import com.app.dw2023.Model.User
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.*
 import com.google.firebase.firestore.EventListener

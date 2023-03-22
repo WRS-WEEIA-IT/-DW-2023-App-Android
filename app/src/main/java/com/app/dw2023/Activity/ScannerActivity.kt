@@ -11,7 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentManager
-import com.app.dw2023.CorrectCodeDialogFragment
+import com.app.dw2023.Fragment.DialogFragment.CorrectCodeDialogFragment
 import com.app.dw2023.Global.*
 import com.app.dw2023.R
 import com.app.dw2023.Fragment.DialogFragment.RepeatedCodeDialogFragment
