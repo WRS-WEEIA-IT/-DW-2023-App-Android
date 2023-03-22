@@ -55,7 +55,7 @@ class EventAdapter(var eventList: ArrayList<Event>, var context: Context): Recyc
         holder.eventCardDate.text = date
 
         val imageSource = event.imageSource
-        val drawableId = ImagesMap.imagesMap[imageSource] ?: R.drawable.event_card_background
+        val drawableId = ImagesMap.imagesMap[imageSource] ?: R.drawable.office
         holder.eventCardImageView.setImageResource(drawableId)
         holder.eventCardImageView.alpha = 0.2F
 
