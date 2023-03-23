@@ -52,5 +52,7 @@
     <string name="wrong_code">Wrong code!</string>
     <string name="ok">OK</string>
     <string name="congratulations">Congratulations!</string>
+    <string name="you_won_an_award">You won an award!</string>
+    <string name="come_and_collect_it">Come to our office to collect it!</string>
 
 </resources>
