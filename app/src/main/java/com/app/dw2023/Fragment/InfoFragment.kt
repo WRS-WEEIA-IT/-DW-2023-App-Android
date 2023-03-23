@@ -1,7 +1,10 @@
 package com.app.dw2023.Fragment
 
+import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
+import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -19,6 +22,7 @@ class InfoFragment : Fragment() {
     private lateinit var sharedPreferences: SharedPreferences
     private lateinit var pointsButton: AppCompatButton
     private lateinit var infoAppID: TextView
+    private lateinit var contactUsButton: AppCompatButton
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -29,6 +33,7 @@ class InfoFragment : Fragment() {
 
         pointsButton = view.findViewById(R.id.infoPointsButton)
         infoAppID = view.findViewById(R.id.infoAppID)
+        contactUsButton = view.findViewById(R.id.infoContactUsButton)
 
         val points = "You have ${AppData.gainedPoints} points!"
         pointsButton.text = points
@@ -37,6 +42,10 @@ class InfoFragment : Fragment() {
         if (AppData.userID != 0) {
             val appID = "App ID: ${AppData.userID}"
             infoAppID.text = appID
+        }
+
+        contactUsButton.setOnClickListener {
+            sendEmail()
         }
 
         AppData.lastSelectedIndex = SETTINGS_FRAGMENT_INDEX
@@ -53,6 +62,18 @@ class InfoFragment : Fragment() {
 
         sharedPreferences = requireActivity().getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
         sharedPreferences.edit().clear().apply()
+    }
+
+    @SuppressLint("QueryPermissionsNeeded")
+    private fun sendEmail() {
+        val emailAddress = arrayOf("dzien.weeia@samorzad.p.lodz.pl")
+        val emailIntent = Intent(Intent.ACTION_SENDTO)
+        emailIntent.data = Uri.parse("mailto:")
+        emailIntent.putExtra(Intent.EXTRA_EMAIL, emailAddress)
+
+        if (emailIntent.resolveActivity(requireActivity().packageManager) != null) {
+            startActivity(Intent.createChooser(emailIntent, "Choose your e-mail app"))
+        }
     }
 
 }
