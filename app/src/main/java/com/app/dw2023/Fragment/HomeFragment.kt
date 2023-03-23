@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.ScrollView
 import android.widget.TextView
@@ -46,6 +47,7 @@ class HomeFragment : Fragment() {
     private lateinit var seeAllEventArrow: ImageView
     private lateinit var seeAllTaskTextView: TextView
     private lateinit var seeAllTaskArrow: ImageView
+    private lateinit var frameLayout: FrameLayout
 
     lateinit var tasksNotDone: ArrayList<Task>
 
@@ -70,6 +72,7 @@ class HomeFragment : Fragment() {
         seeAllEventArrow = view.findViewById(R.id.seeAllEventArrow)
         seeAllTaskTextView = view.findViewById(R.id.seeAllTasksTextView)
         seeAllTaskArrow = view.findViewById(R.id.seeAllTasksArrow)
+        frameLayout = view.findViewById(R.id.homeFrameLayout)
 
         tasksNotDone = ArrayList<Task>()
 
