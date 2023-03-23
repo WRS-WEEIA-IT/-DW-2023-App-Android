@@ -17,6 +17,7 @@ object ImagesMap {
         "robot" to R.drawable.robot,
         "students" to R.drawable.students,
         "time" to R.drawable.time,
+        "congratulations" to R.drawable.congratulations,
         "taskphoto1" to R.drawable.taskphoto1,
         "taskphoto2" to R.drawable.taskphoto2,
         "taskphoto3" to R.drawable.taskphoto3,

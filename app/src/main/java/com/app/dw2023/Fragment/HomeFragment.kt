@@ -180,6 +180,21 @@ class HomeFragment : Fragment() {
                     tasksNotDone.clear()
                     tasksNotDone.addAll(AppData.tasksList.filter { !it.isDone })
                     tasksNotDone.sortBy { it.taskNumber }
+                    if (tasksNotDone.isEmpty()) {
+                        if (AppData.tasksList.isEmpty()) {  // no tasks at all, probably no internet connection
+                            tasksNotDone.add(Task(
+                                title = "placeholderTask",
+                                description = "",
+                                imageSource = ""
+                            ))
+                        } else {  // tasks exist, but they're done, so add congratulations "task"
+                            tasksNotDone.add(Task(
+                                title = "Good job :)",
+                                description = "You've completed each task!",
+                                imageSource = "congratulations"
+                            ))
+                        }
+                    }
 
                     adapter.notifyDataSetChanged()
                 }

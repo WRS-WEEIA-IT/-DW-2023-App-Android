@@ -51,5 +51,6 @@
     <string name="task_already_done">Task already done!</string>
     <string name="wrong_code">Wrong code!</string>
     <string name="ok">OK</string>
+    <string name="congratulations">Congratulations!</string>
 
 </resources>

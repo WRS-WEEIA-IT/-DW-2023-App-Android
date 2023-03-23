@@ -27,6 +27,7 @@ class TaskAdapter(var tasksArray: ArrayList<Task>, var context: Context) : Recyc
         val taskConstraintLayout : ConstraintLayout = itemView.findViewById(R.id.tasksConstraintLayout)
         val taskQRCodeImageView : ImageView = itemView.findViewById(R.id.tasksQRCodeImageView)
         val taskCardView : CardView = itemView.findViewById(R.id.taskCardView)
+        val taskQRCodeTextView : TextView = itemView.findViewById(R.id.tasksQRCodeTextView)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskViewHolder {
@@ -47,6 +48,21 @@ class TaskAdapter(var tasksArray: ArrayList<Task>, var context: Context) : Recyc
         if (AppData.loadedQrCodes.contains(task.qrCode)) {
             holder.taskConstraintLayout.alpha = 0.4F
             holder.taskQRCodeImageView.setImageResource(R.drawable.tasks_completed)
+        }
+
+        if (task.title == "Good job :)") {
+            holder.taskButton.alpha = 0.0F
+            holder.taskQRCodeTextView.alpha = 0.0F
+            val congrats = "Congratulations!"
+            holder.taskNumber.text = congrats
+            holder.taskNumber.textSize = 16F
+            holder.taskTitle.textSize = 14F
+            holder.taskTips.textSize = 12F
+            holder.taskQRCodeImageView.setImageResource(R.drawable.tasks_completed)
+        }
+
+        if (task.title == "placeholderTask") {
+            holder.taskCardView.alpha = 0.0F
         }
 
         val imageSource = task.imageSource
