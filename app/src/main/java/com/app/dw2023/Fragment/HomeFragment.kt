@@ -5,6 +5,8 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.net.Uri
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -53,6 +55,8 @@ class HomeFragment : Fragment() {
 
     private lateinit var horizontalRecyclerView: RecyclerView
     private lateinit var adapter: TaskAdapter
+    lateinit var handler: Handler
+    private lateinit var runnable: Runnable
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -93,6 +97,8 @@ class HomeFragment : Fragment() {
 
         eventChangeListener()
         tasksChangeListener()
+
+        enableAutoScroll()
 
         createOrGetID()
 
@@ -296,5 +302,39 @@ class HomeFragment : Fragment() {
         db.collection("users").document(AppData.userID.toString()).set(user)
             .addOnSuccessListener { Log.d(LOG_MESSAGE, "Added new user with ${user.id} ID") }
             .addOnFailureListener { Log.d(LOG_MESSAGE, "Error in adding new user with ${user.id} ID") }
+    }
+
+    private fun enableAutoScroll() {
+        var position = 0
+        handler = Handler(Looper.getMainLooper())
+        runnable = object : Runnable {
+            override fun run() {
+                position++
+                if (position < adapter.itemCount) {
+                    horizontalRecyclerView.smoothScrollToPosition(position)
+                } else {
+                    horizontalRecyclerView.smoothScrollToPosition(0)
+                    position = 0
+                }
+                handler.postDelayed(this, 3000)
+            }
+        }
+        handler.postDelayed(runnable, 3000)
+
+        horizontalRecyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                if (newState == RecyclerView.SCROLL_STATE_DRAGGING) {
+                    handler.removeCallbacks(runnable)
+                } else if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                    handler.removeCallbacks(runnable)
+                    handler.postDelayed(runnable, 3000)
+                }
+            }
+        })
+    }
+
+    override fun onPause() {
+        handler.removeCallbacks(runnable)
+        super.onPause()
     }
 }
