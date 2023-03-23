@@ -54,5 +54,6 @@
     <string name="congratulations">Congratulations!</string>
     <string name="you_won_an_award">You won an award!</string>
     <string name="come_and_collect_it">Come to our office to collect it!</string>
+    <string name="sorry_didnt_win">Sorry! You didn\'t win any award :(</string>
 
 </resources>
