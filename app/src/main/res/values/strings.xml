@@ -28,7 +28,7 @@
     <string name="sign_up">Sign up</string>
 
     <string name="available_tasks_title">Available tasks:</string>
-    <string name="current_points">Currently, you have earned 0 points!</string>
+    <string name="current_points">You have 0 points!</string>
     <string name="button_points">10 Points</string>
     <string name="scan_to_complete">Scan QR code to complete task</string>
     <string name="tips_to_complete">Tips to complete, these are tips to complete </string>
@@ -55,5 +55,8 @@
     <string name="you_won_an_award">You won an award!</string>
     <string name="come_and_collect_it">Come to our office to collect it!</string>
     <string name="sorry_didnt_win">Sorry! You didn\'t win any award :(</string>
+    <string name="rules_are_simple">Rules are simple:</string>
+    <string name="collect_points_rule">Collect points by scanning QR codes during Dzień Wydziału on 31st March 2023</string>
+    <string name="we_will_inform_rule">We will inform winners with most points after the event in the Home section</string>
 
 </resources>

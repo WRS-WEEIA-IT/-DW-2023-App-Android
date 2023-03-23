@@ -38,7 +38,8 @@ class TasksFragment : Fragment() {
         tasksPoints = view.findViewById(R.id.tasksTextViewPoints)
 
         tasksAdapter = TaskAdapter(AppData.tasksList, requireContext())
-        tasksPoints.text = AppData.gainedPoints.toString()
+        val points = "You have ${AppData.gainedPoints} points!"
+        tasksPoints.text = points
         recyclerView.adapter = tasksAdapter
 
         tasksChangeListener()
