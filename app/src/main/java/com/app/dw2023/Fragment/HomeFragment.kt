@@ -18,18 +18,22 @@ import android.widget.ScrollView
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatButton
 import androidx.core.view.isInvisible
+import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.app.dw2023.Activity.MainActivity
 import com.app.dw2023.Adapter.TaskAdapter
 import com.app.dw2023.Global.*
+import com.app.dw2023.LoseDialogFragment
 import com.app.dw2023.Model.Event
 import com.app.dw2023.Model.Task
 import com.app.dw2023.R
 import com.app.dw2023.Model.User
+import com.app.dw2023.WinDialogFragment
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.*
 import com.google.firebase.firestore.EventListener
+import com.google.firebase.firestore.ktx.toObject
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -298,9 +302,7 @@ class HomeFragment : Fragment() {
                         Log.d(LOG_MESSAGE, "User with $randomID ID already exists")
                         return@addOnSuccessListener
                     } else {  // user doesn't exist, can use randomID
-                        AppData.userID = randomID
-                        sharedPreferences.edit().putInt(PREF_USER_ID, randomID).apply()
-                        addUserToFirestore()
+                        addUserToFirestore(randomID)
                         Log.d(LOG_MESSAGE, "ID has been set to $randomID")
                     }
                 }
@@ -309,13 +311,18 @@ class HomeFragment : Fragment() {
                 }
         } else {  // ID was set before
             Log.d(LOG_MESSAGE, "ID was set before and it is ${AppData.userID}")
+            showWinOrLoseAfterTime()
         }
     }
 
-    private fun addUserToFirestore() {
-        val user = User(AppData.userID, AppData.gainedPoints, Timestamp.now(), false)
-        db.collection("users").document(AppData.userID.toString()).set(user)
-            .addOnSuccessListener { Log.d(LOG_MESSAGE, "Added new user with ${user.id} ID") }
+    private fun addUserToFirestore(ID: Int) {
+        val user = User(ID, AppData.gainedPoints, Timestamp.now(), false)
+        db.collection("users").document(ID.toString()).set(user)
+            .addOnSuccessListener {
+                Log.d(LOG_MESSAGE, "Added new user with ${user.id} ID")
+                AppData.userID = ID
+                sharedPreferences.edit().putInt(PREF_USER_ID, ID).apply()
+            }
             .addOnFailureListener { Log.d(LOG_MESSAGE, "Error in adding new user with ${user.id} ID") }
     }
 
@@ -351,5 +358,54 @@ class HomeFragment : Fragment() {
     override fun onPause() {
         handler.removeCallbacks(runnable)
         super.onPause()
+    }
+
+    private fun showWinDialogFragment() {
+        val fragmentManager : FragmentManager = requireActivity().supportFragmentManager
+        val winDialogFragment = WinDialogFragment()
+
+        winDialogFragment.show(fragmentManager, "WinDialogFragment")
+        winDialogFragment.isCancelable = false
+    }
+
+    private fun showLoseDialogFragment() {
+        val fragmentManager : FragmentManager = requireActivity().supportFragmentManager
+        val loseDialogFragment = LoseDialogFragment()
+
+        loseDialogFragment.show(fragmentManager, "LoseDialogFragment")
+        loseDialogFragment.isCancelable = false
+    }
+
+    private fun showWinOrLoseAfterTime() {
+        db.collection("contestTime")
+            .whereLessThan("endTime", Timestamp.now())
+            .get()
+            .addOnSuccessListener { documents ->
+                Log.d(LOG_MESSAGE, "Successful docs and user ${AppData.userID}:")
+                for (doc in documents) {
+                    Log.d(LOG_MESSAGE, doc.data.toString())
+                    getUserAndShowResults()
+                }
+            }
+            .addOnFailureListener { exception ->
+                Log.e(LOG_MESSAGE, "Error: $exception")
+            }
+}
+
+    private fun getUserAndShowResults() {
+        db.collection("users")
+            .document(AppData.userID.toString())
+            .get()
+            .addOnSuccessListener {
+                if (it != null) {
+                    Log.d(LOG_MESSAGE, "it != null && it.exists()")
+                    val user = it.toObject<User>()
+                    if (user != null && user.winner) {
+                        showWinDialogFragment()
+                    } else {
+                        showLoseDialogFragment()
+                    }
+                }
+            }
     }
 }
