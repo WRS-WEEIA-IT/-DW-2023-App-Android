@@ -298,24 +298,19 @@ class HomeFragment : Fragment() {
         if (AppData.userID == 0) {  // user ID hasn't been set yet, let's try to set it
 
             val randomID = (1..ID_MAX_VALUE).random()
-            Log.d(LOG_MESSAGE, "Drawn random ID = $randomID")
 
             val docRef = db.collection("users").document(randomID.toString())
             docRef.get()
                 .addOnSuccessListener { document ->
                     if (document != null && document.exists()) {  // user exists, can't use that randomID
-                        Log.d(LOG_MESSAGE, "User with $randomID ID already exists")
                         return@addOnSuccessListener
                     } else {  // user doesn't exist, can use randomID
                         addUserToFirestore(randomID)
-                        Log.d(LOG_MESSAGE, "ID has been set to $randomID")
                     }
                 }
                 .addOnFailureListener {
-                    Log.e(LOG_MESSAGE, "Error ${it.toString()}")
                 }
         } else {  // ID was set before
-            Log.d(LOG_MESSAGE, "ID was set before and it is ${AppData.userID}")
             showWinOrLoseAfterTime()
         }
     }
@@ -328,7 +323,7 @@ class HomeFragment : Fragment() {
                 AppData.userID = ID
                 sharedPreferences.edit().putInt(PREF_USER_ID, ID).apply()
             }
-            .addOnFailureListener { Log.d(LOG_MESSAGE, "Error in adding new user with ${user.id} ID") }
+            .addOnFailureListener { Log.e(LOG_MESSAGE, "Error in adding new user with ${user.id} ID") }
     }
 
     private fun enableAutoScroll() {
@@ -386,9 +381,7 @@ class HomeFragment : Fragment() {
             .whereLessThan("endTime", Timestamp.now())
             .get()
             .addOnSuccessListener { documents ->
-                Log.d(LOG_MESSAGE, "Successful docs and user ${AppData.userID}:")
                 for (doc in documents) {
-                    Log.d(LOG_MESSAGE, doc.data.toString())
                     getUserAndShowResults()
                 }
             }
@@ -403,7 +396,6 @@ class HomeFragment : Fragment() {
             .get()
             .addOnSuccessListener {
                 if (it != null) {
-                    Log.d(LOG_MESSAGE, "it != null && it.exists()")
                     val user = it.toObject<User>()
                     if (user != null && user.winner) {
                         showWinDialogFragment()
@@ -423,7 +415,6 @@ class HomeFragment : Fragment() {
                 .addOnSuccessListener {
                     AppData.successfullySavedPoints = true
                     sharedPreferences.edit().putBoolean(PREF_DIRTY_POINTS, true).apply()
-                    Log.d(LOG_MESSAGE, "Successfully saved dirty points in Home $locallySavedPoints")
                 }
                 .addOnFailureListener {
                     AppData.successfullySavedPoints = false

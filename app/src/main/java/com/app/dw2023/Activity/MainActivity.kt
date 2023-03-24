@@ -5,7 +5,6 @@ import android.content.Intent
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import androidx.core.content.ContextCompat
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
@@ -60,7 +59,6 @@ class MainActivity : AppCompatActivity() {
     private fun getSavedData() {
         sharedPreferences = getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
 
-        Log.d(LOG_MESSAGE, "Got loadedQrCodes")
         AppData.lastSelectedIndex = sharedPreferences.getInt(PREF_LAST_SELECTED_FRAGMENT_INDEX, 0)
         AppData.loadedQrCodes = sharedPreferences.getStringSet(PREF_QR_CODES, setOf())!!.toMutableSet()
         AppData.gainedPoints = sharedPreferences.getInt(PREF_GAINED_POINTS, 0)

@@ -5,7 +5,6 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.os.*
-import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -160,10 +159,10 @@ class ScannerActivity : AppCompatActivity() {
         }
         AppData.successfullySavedPoints = false
         sharedPreferences.edit().putBoolean(PREF_DIRTY_POINTS, false).apply()
-        updateUserPointsInFirestore()
-
         sharedPreferences.edit().putInt(PREF_GAINED_POINTS, AppData.gainedPoints).apply()
         sharedPreferences.edit().putStringSet(PREF_QR_CODES, AppData.loadedQrCodes).apply()
+
+        updateUserPointsInFirestore()
     }
 
     fun returnToMainActivity() {
@@ -249,13 +248,11 @@ class ScannerActivity : AppCompatActivity() {
                 .addOnSuccessListener {
                     AppData.successfullySavedPoints = true
                     sharedPreferences.edit().putBoolean(PREF_DIRTY_POINTS, true).apply()
-                    Log.d(LOG_MESSAGE, "Success in saving firestore points and date in ${AppData.gainedPoints}")
                 }
                 .addOnFailureListener {
                     AppData.successfullySavedPoints = false
                     sharedPreferences.edit().putBoolean(PREF_DIRTY_POINTS, false).apply()
                 }
-            Log.d(LOG_MESSAGE, "Updated points")
         }
     }
 }
