@@ -64,6 +64,7 @@ class CorrectCodeDialogFragment : DialogFragment() {
         val drawableId = ImagesMap.imagesMap[imageSource] ?: R.drawable.event_card_background
 
         correctTasksCardPointsButton.text = points
+        correctTasksCardPointsButton.isClickable = false
         correctTasksTipsTextView.text = arguments?.getString("completedTaskTipsBundle")
         correctTasksCardImageView.setImageResource(drawableId)
         correctTasksTitleTextView.text = arguments?.getString("completedTaskTitleBundle")

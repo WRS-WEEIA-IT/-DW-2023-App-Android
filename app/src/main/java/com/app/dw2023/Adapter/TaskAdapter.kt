@@ -48,6 +48,8 @@ class TaskAdapter(var tasksArray: ArrayList<Task>, var context: Context) : Recyc
         if (AppData.loadedQrCodes.contains(task.qrCode)) {
             holder.taskConstraintLayout.alpha = 0.4F
             holder.taskQRCodeImageView.setImageResource(R.drawable.tasks_completed)
+            val taskCompletedText = "Task completed!"
+            holder.taskQRCodeTextView.text = taskCompletedText
         }
 
         if (task.title == "Good job :)") {

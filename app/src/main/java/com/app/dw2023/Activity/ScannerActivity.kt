@@ -18,6 +18,7 @@ import com.app.dw2023.Fragment.DialogFragment.RepeatedCodeDialogFragment
 import com.app.dw2023.Fragment.DialogFragment.WrongCodeDialogFragment
 import com.app.dw2023.Model.Task
 import com.budiyev.android.codescanner.*
+import com.google.firebase.Timestamp
 import com.google.firebase.firestore.FirebaseFirestore
 
 class ScannerActivity : AppCompatActivity() {
@@ -134,6 +135,7 @@ class ScannerActivity : AppCompatActivity() {
         if (::codeScanner.isInitialized) {
             codeScanner.releaseResources()
         }
+        sharedPreferences.edit().putBoolean(PREF_DIRTY_POINTS, AppData.successfullySavedPoints).apply()
         super.onPause()
     }
 
@@ -157,6 +159,7 @@ class ScannerActivity : AppCompatActivity() {
             AppData.gainedPoints = totalScore
         }
         AppData.successfullySavedPoints = false
+        sharedPreferences.edit().putBoolean(PREF_DIRTY_POINTS, false).apply()
         updateUserPointsInFirestore()
 
         sharedPreferences.edit().putInt(PREF_GAINED_POINTS, AppData.gainedPoints).apply()
@@ -242,9 +245,16 @@ class ScannerActivity : AppCompatActivity() {
     private fun updateUserPointsInFirestore() {
         if (AppData.userID != 0) {
             db = FirebaseFirestore.getInstance()
-            db.collection("users").document(AppData.userID.toString()).update("points", AppData.gainedPoints)
-                .addOnSuccessListener { AppData.successfullySavedPoints = true }
-                .addOnFailureListener { AppData.successfullySavedPoints = false }
+            db.collection("users").document(AppData.userID.toString()).update("points", AppData.gainedPoints, "time", Timestamp.now())
+                .addOnSuccessListener {
+                    AppData.successfullySavedPoints = true
+                    sharedPreferences.edit().putBoolean(PREF_DIRTY_POINTS, true).apply()
+                    Log.d(LOG_MESSAGE, "Success in saving firestore points and date in ${AppData.gainedPoints}")
+                }
+                .addOnFailureListener {
+                    AppData.successfullySavedPoints = false
+                    sharedPreferences.edit().putBoolean(PREF_DIRTY_POINTS, false).apply()
+                }
             Log.d(LOG_MESSAGE, "Updated points")
         }
     }

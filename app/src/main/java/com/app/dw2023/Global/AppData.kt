@@ -18,6 +18,7 @@ const val PREF_ACTIVITY_AFTER_SCANNER = "key_activity_after_scanner"
 const val PREF_QR_CODES = "qr_codes_key"
 const val PREF_GAINED_POINTS = "gained_points_key"
 const val PREF_USER_ID = "user_id_key"
+const val PREF_DIRTY_POINTS = "dirty_points_key"
 
 object AppData {
     var lastSelectedIndex = 0

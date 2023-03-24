@@ -161,6 +161,7 @@ class HomeFragment : Fragment() {
     private fun tasksChangeListener() {
 
         AppData.tasksList.clear()
+        Log.d(LOG_MESSAGE, "Cleared tasksList")
 
         db = FirebaseFirestore.getInstance()
         db.collection("tasks")
@@ -179,6 +180,8 @@ class HomeFragment : Fragment() {
                         }
                     }
 
+                    Log.d(LOG_MESSAGE, "Filled tasksList")
+
                     AppData.tasksList.filter { it.qrCode in AppData.loadedQrCodes }.forEach { it.isDone = true }
                     keepOnlyUniqueTasks()
                     AppData.tasksList.sortBy { it.isDone }
@@ -196,7 +199,7 @@ class HomeFragment : Fragment() {
                         } else {  // tasks exist, but they're done, so add congratulations "task"
                             tasksNotDone.add(Task(
                                 title = "Good job :)",
-                                description = "You've completed each task!",
+                                description = "You have completed all tasks!",
                                 imageSource = "congratulations"
                             ))
                         }
@@ -412,13 +415,20 @@ class HomeFragment : Fragment() {
     }
 
     private fun saveNotSavedPointsInFirestore() {
-        if (AppData.userID != 0 && !AppData.successfullySavedPoints) {
-            db.collection("users").document(AppData.userID.toString()).update("points", AppData.gainedPoints)
+        AppData.successfullySavedPoints = sharedPreferences.getBoolean(PREF_DIRTY_POINTS, true)
+        val locallySavedPoints = sharedPreferences.getInt(PREF_GAINED_POINTS, 0)
+
+        if (AppData.userID != 0 && !AppData.successfullySavedPoints && locallySavedPoints != 0) {
+            db.collection("users").document(AppData.userID.toString()).update("points", locallySavedPoints,"time", Timestamp.now())
                 .addOnSuccessListener {
                     AppData.successfullySavedPoints = true
-                    Log.d(LOG_MESSAGE, "Successfully saved dirty points")
+                    sharedPreferences.edit().putBoolean(PREF_DIRTY_POINTS, true).apply()
+                    Log.d(LOG_MESSAGE, "Successfully saved dirty points in Home $locallySavedPoints")
                 }
-                .addOnFailureListener { AppData.successfullySavedPoints = false }
+                .addOnFailureListener {
+                    AppData.successfullySavedPoints = false
+                    sharedPreferences.edit().putBoolean(PREF_DIRTY_POINTS, false).apply()
+                }
 
         }
     }
