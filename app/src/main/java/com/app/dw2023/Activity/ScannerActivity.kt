@@ -156,6 +156,7 @@ class ScannerActivity : AppCompatActivity() {
         if (totalScore > AppData.gainedPoints) {
             AppData.gainedPoints = totalScore
         }
+        AppData.successfullySavedPoints = false
         updateUserPointsInFirestore()
 
         sharedPreferences.edit().putInt(PREF_GAINED_POINTS, AppData.gainedPoints).apply()
@@ -242,6 +243,8 @@ class ScannerActivity : AppCompatActivity() {
         if (AppData.userID != 0) {
             db = FirebaseFirestore.getInstance()
             db.collection("users").document(AppData.userID.toString()).update("points", AppData.gainedPoints)
+                .addOnSuccessListener { AppData.successfullySavedPoints = true }
+                .addOnFailureListener { AppData.successfullySavedPoints = false }
             Log.d(LOG_MESSAGE, "Updated points")
         }
     }

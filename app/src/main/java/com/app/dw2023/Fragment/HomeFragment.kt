@@ -106,6 +106,8 @@ class HomeFragment : Fragment() {
 
         createOrGetID()
 
+        saveNotSavedPointsInFirestore()
+
         return view
     }
 
@@ -407,5 +409,17 @@ class HomeFragment : Fragment() {
                     }
                 }
             }
+    }
+
+    private fun saveNotSavedPointsInFirestore() {
+        if (AppData.userID != 0 && !AppData.successfullySavedPoints) {
+            db.collection("users").document(AppData.userID.toString()).update("points", AppData.gainedPoints)
+                .addOnSuccessListener {
+                    AppData.successfullySavedPoints = true
+                    Log.d(LOG_MESSAGE, "Successfully saved dirty points")
+                }
+                .addOnFailureListener { AppData.successfullySavedPoints = false }
+
+        }
     }
 }

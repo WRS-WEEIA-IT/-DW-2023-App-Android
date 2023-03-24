@@ -30,4 +30,5 @@ object AppData {
     var userID = 0
 
     var afterScanner = false
+    var successfullySavedPoints = true
 }
