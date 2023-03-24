@@ -24,12 +24,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.app.dw2023.Activity.MainActivity
 import com.app.dw2023.Adapter.TaskAdapter
 import com.app.dw2023.Global.*
-import com.app.dw2023.LoseDialogFragment
+import com.app.dw2023.Fragment.DialogFragment.LoseDialogFragment
 import com.app.dw2023.Model.Event
 import com.app.dw2023.Model.Task
 import com.app.dw2023.R
 import com.app.dw2023.Model.User
-import com.app.dw2023.WinDialogFragment
+import com.app.dw2023.Fragment.DialogFragment.WinDialogFragment
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.*
 import com.google.firebase.firestore.EventListener
