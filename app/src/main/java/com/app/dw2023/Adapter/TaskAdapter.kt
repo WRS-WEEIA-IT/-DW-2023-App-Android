@@ -44,6 +44,10 @@ class TaskAdapter(var tasksArray: ArrayList<Task>, var context: Context) : Recyc
         holder.taskNumber.text = taskNumberText
         holder.taskTitle.text = task.title
         holder.taskTips.text = task.description
+        holder.taskConstraintLayout.alpha = 1F
+        holder.taskQRCodeImageView.setImageResource(R.drawable.tasks_qr_code)
+        val taskAvailable = "Scan QR code to complete task"
+        holder.taskQRCodeTextView.text = taskAvailable
 
         if (AppData.loadedQrCodes.contains(task.qrCode)) {
             holder.taskConstraintLayout.alpha = 0.4F

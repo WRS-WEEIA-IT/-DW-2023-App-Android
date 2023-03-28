@@ -161,7 +161,6 @@ class HomeFragment : Fragment() {
     private fun tasksChangeListener() {
 
         AppData.tasksList.clear()
-        Log.d(LOG_MESSAGE, "Cleared tasksList")
 
         db = FirebaseFirestore.getInstance()
         db.collection("tasks")
@@ -179,8 +178,6 @@ class HomeFragment : Fragment() {
                             AppData.tasksList.add(task)
                         }
                     }
-
-                    Log.d(LOG_MESSAGE, "Filled tasksList")
 
                     AppData.tasksList.filter { it.qrCode in AppData.loadedQrCodes }.forEach { it.isDone = true }
                     keepOnlyUniqueTasks()

@@ -87,6 +87,7 @@ class ScannerActivity : AppCompatActivity() {
                         vibrateSuccessful()
                     } else {
                         vibrateFailure()
+                        sharedPreferences.edit().putStringSet(PREF_QR_CODES, AppData.loadedQrCodes).apply()
                         showWrongCodeDialogFragment()
                     }
                 } else {
@@ -154,9 +155,8 @@ class ScannerActivity : AppCompatActivity() {
             AppData.tasksList.filter { AppData.loadedQrCodes.contains(it.qrCode) }
                 .map { it.points }
         val totalScore = AppData.pointsList.sum()
-        if (totalScore > AppData.gainedPoints) {
-            AppData.gainedPoints = totalScore
-        }
+        AppData.gainedPoints = totalScore
+
         AppData.successfullySavedPoints = false
         sharedPreferences.edit().putBoolean(PREF_DIRTY_POINTS, false).apply()
         sharedPreferences.edit().putInt(PREF_GAINED_POINTS, AppData.gainedPoints).apply()

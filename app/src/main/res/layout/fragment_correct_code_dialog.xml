@@ -86,28 +86,34 @@
 
             <TextView
                 android:id="@+id/correctTasksTipsTextView"
-                android:layout_width="150dp"
+                android:layout_width="0dp"
                 android:layout_height="32dp"
                 android:layout_marginStart="24dp"
+                android:layout_marginEnd="16dp"
                 android:fontFamily="@font/montserrat_light"
                 android:text="@string/tips_to_complete"
                 android:textAlignment="textStart"
                 android:textColor="@color/white"
                 android:textSize="8sp"
                 app:layout_constraintBottom_toTopOf="@+id/correctTasksCardPointsButton"
+                app:layout_constraintEnd_toStartOf="@+id/correctTasksQRCodeImageView"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/correctTasksTitleTextView" />
 
             <TextView
                 android:id="@+id/correctTasksTitleTextView"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
                 android:layout_marginTop="4dp"
+                android:layout_marginEnd="16dp"
                 android:fontFamily="@font/montserrat"
                 android:text="@string/welcome_on_weeia"
                 android:textColor="@color/white"
                 android:textSize="12sp"
+                app:layout_constraintEnd_toStartOf="@+id/correctTasksQRCodeImageView"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/correctTasksNumberTextView" />
 
