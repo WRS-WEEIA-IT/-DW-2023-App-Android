@@ -40,6 +40,7 @@
     <string name="some_more_questions">Some questions?</string>
     <string name="app_language">Application language</string>
     <string name="info">Info</string>
+    <string name="information">Information</string>
     <string name="app_id">App ID: #</string>
     <string name="welcome_in_dw_app">Hi! Welcome to DW App!</string>
     <string name="info_app_desc">There are some information about event, app and your profile.</string>

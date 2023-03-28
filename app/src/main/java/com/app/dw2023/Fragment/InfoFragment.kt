@@ -1,9 +1,7 @@
 package com.app.dw2023.Fragment
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -13,13 +11,11 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatButton
 import com.app.dw2023.Global.AppData
-import com.app.dw2023.Global.PREF_NAME
 import com.app.dw2023.Global.SETTINGS_FRAGMENT_INDEX
 import com.app.dw2023.R
 
 class InfoFragment : Fragment() {
 
-    private lateinit var sharedPreferences: SharedPreferences
     private lateinit var pointsButton: AppCompatButton
     private lateinit var infoAppID: TextView
     private lateinit var contactUsButton: AppCompatButton
@@ -50,19 +46,9 @@ class InfoFragment : Fragment() {
 
         AppData.lastSelectedIndex = SETTINGS_FRAGMENT_INDEX
 
-//        debugClearData()
-
         return view
     }
 
-    private fun debugClearData() {
-        AppData.loadedQrCodes = mutableSetOf()
-        AppData.gainedPoints = 0
-        AppData.tasksList = arrayListOf()
-
-        sharedPreferences = requireActivity().getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
-        sharedPreferences.edit().clear().apply()
-    }
 
     @SuppressLint("QueryPermissionsNeeded")
     private fun sendEmail() {
