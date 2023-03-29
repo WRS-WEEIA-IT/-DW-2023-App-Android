@@ -67,7 +67,6 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        AppData.lastSelectedIndex = HOME_FRAGMENT_INDEX
         val view = inflater.inflate(R.layout.fragment_home, container, false)
 
         scrollView = view.findViewById(R.id.homeScrollView)
@@ -102,7 +101,14 @@ class HomeFragment : Fragment() {
         eventChangeListener()
         tasksChangeListener()
 
-        enableAutoScroll()
+        if (!AppData.afterScanner) {
+            enableAutoScroll()
+        } else if (AppData.lastSelectedIndex == HOME_FRAGMENT_INDEX) {
+            enableAutoScroll()
+        }
+
+        AppData.afterScanner = false
+        AppData.lastSelectedIndex = HOME_FRAGMENT_INDEX
 
         createOrGetID()
 
@@ -336,14 +342,18 @@ class HomeFragment : Fragment() {
                     position = 0
                 }
                 handler.postDelayed(this, 3000)
+                Log.d(LOG_MESSAGE, "Scroll to position $position")
             }
         }
         handler.postDelayed(runnable, 3000)
+        Log.d(LOG_MESSAGE, "Created new autoscroll")
 
         horizontalRecyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 if (newState == RecyclerView.SCROLL_STATE_DRAGGING) {
                     handler.removeCallbacks(runnable)
+                    Log.d(LOG_MESSAGE, "Stop autoscroll by dragging")
+
                 }
             }
         })
@@ -351,6 +361,7 @@ class HomeFragment : Fragment() {
 
     override fun onPause() {
         handler.removeCallbacks(runnable)
+        Log.d(LOG_MESSAGE, "Stopped by onPause")
         super.onPause()
     }
 
