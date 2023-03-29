@@ -344,9 +344,6 @@ class HomeFragment : Fragment() {
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 if (newState == RecyclerView.SCROLL_STATE_DRAGGING) {
                     handler.removeCallbacks(runnable)
-                } else if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-                    handler.removeCallbacks(runnable)
-                    handler.postDelayed(runnable, 3000)
                 }
             }
         })

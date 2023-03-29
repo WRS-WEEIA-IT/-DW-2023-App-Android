@@ -11,11 +11,19 @@ import android.view.WindowManager
 import androidx.core.content.ContextCompat
 import com.app.dw2023.R
 import com.app.dw2023.Activity.MainActivity
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.analytics.ktx.analytics
+import com.google.firebase.ktx.Firebase
 
 class StarterActivity : AppCompatActivity() {
+
+    private lateinit var analytics: FirebaseAnalytics
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_starter)
+
+        analytics = Firebase.analytics
 
         supportActionBar?.hide()
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
